@@ -24,17 +24,18 @@ testLayout = Row
   -- [ Row [Cell 1]
   ]
 
-type Layout = Grid Int
+type Weight = Int
+type Layout = Grid Weight
 
-fillGrid :: (Show a) => Layout -> [a] -> ([a], Grid a)
-fillGrid (Cell _) [] = error "shouldn't happen"
-fillGrid (Cell _) (i:is) = (is, Cell i)
+fillGrid :: (Show a) => Layout -> [a] -> ([a], Grid (Weight, a))
+fillGrid (Cell _) [] = ([], Row [])
+fillGrid (Cell w) (i:is) = (is, Cell (w, i))
 fillGrid (Row r) items = foldl f initAcc r
   where
     f (is, grid) g = case is of
       [] -> ([], grid)
       ais@(i:iss) -> case g of
-        Cell _ -> (iss, gridConcat grid (Cell i))
+        Cell w -> (iss, gridConcat grid (Cell (w, i)))
         row -> (niss, gridConcat grid (Row [nrow]))
           where (niss, nrow) = fillGrid row ais
     initAcc = (items, Row [])
