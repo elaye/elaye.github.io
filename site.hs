@@ -126,89 +126,14 @@ main = do
 
 -- mkGridHtml :: (Show a) => Grid (Weight, Item a) -> String
 mkGridHtml :: (Show a) => Grid (Weight, Item a) -> Template -> Context a -> Compiler (Item String)
--- mkGridHtml (Cell (_, c)) = show $ itemBody c
--- mkGridHtml (Cell (_, c)) tpl ctx = do
---   li <- applyTemplate tpl ctx c
---   makeItem $ "<li>" ++ (traceShow li (itemBody li)) ++ "</li>"
 mkGridHtml (Cell (_, c)) tpl ctx = applyTemplate tpl ctx c
 mkGridHtml (Row r) tpl ctx = do
-  -- let
-  --   f acc g = makeItem $ acc ++ (itemBody r)
-  --     where r = case g of
-  --                 cell@(Cell _) -> do
-  --                   li <- mkGridHtml cell tpl ctx
-  --                   return $ makeItem $ "<li>" ++ (itemBody li) ++ "</li>"
-  --                 row@(Row _) -> do
-  --                   ul <- mkGridHtml cell tpl ctx
-  --                   return $ makeItem $ "<ul>" ++ (itemBody ul) ++ "</ul>"
-
-  -- return $ foldl f (makeItem "") r
   ul <- mapM (\g -> mkGridHtml g tpl ctx) r :: (Compiler [Item String])
-  -- let uls = foldl (\i acc -> (itemBody i) ++ acc) "" ul
   let uls = foldl ulFolder "" ul :: String
   makeItem $ "<ul>" ++ uls ++ "</ul>"
 
--- ulFolder :: Item String -> String -> String
 ulFolder :: String -> Item String -> String
--- ulFolder item acc = (itemBody item) ++ acc
 ulFolder acc item = acc ++ (itemBody item)
-
--- -- mkGridHtml :: (Show a) => Grid (Weight, Item a) -> String
--- mkGridHtml :: (Show a) => Grid (Weight, Item a) -> Template -> Context a -> Compiler (Item String)
--- -- mkGridHtml (Cell (_, c)) = show $ itemBody c
--- mkGridHtml (Cell (_, c)) tpl ctx = applyTemplate tpl ctx c
--- mkGridHtml (Row r) tpl ctx =
---   let
---     f acc g = makeItem $ acc ++ (itemBody r)
---       where r = case g of
---                   cell@(Cell _) -> do
---                     li <- mkGridHtml cell tpl ctx
---                     return $ makeItem $ "<li>" ++ (itemBody li) ++ "</li>"
---                   row@(Row _) -> do
---                     ul <- mkGridHtml cell tpl ctx
---                     return $ makeItem $ "<ul>" ++ (itemBody ul) ++ "</ul>"
-
---   return $ foldl f (makeItem "") r
-
-  -- where
-  --   f acc g = compMap (\e -> acc ++ e) r
-  --     where
-  --       r = case g of
-  --         -- Cell (w, c) -> "<li>" ++ show w ++ "</li>"
-  --         -- row -> "<ul>" ++ mkGridHtml row ++ "</ul>"
-  --         -- cell@(Cell (w, c)) -> "<li>" ++ (mkGridHtml cell tpl ctx) ++ "</li>"
-  --         -- row -> "<ul>" ++ (mkGridHtml row tpl ctx) ++ "</ul>"
-  --         cell@(Cell (w, c)) -> compMap (\e -> "<li>" ++ e ++ "</li>") (mkGridHtml cell tpl ctx)
-  --         row -> compMap (\e -> "<ul>" ++ e ++ "</ul>") (mkGridHtml row tpl ctx)
-  --       compMap f comp = map (\x -> map f x) comp
-
--- -- mkGridHtml :: (Show a) => Grid (Weight, Item a) -> String
--- mkGridHtml :: (Show a) => Grid (Weight, Item a) -> Template -> Context a -> Compiler (Item String)
--- -- mkGridHtml (Cell (_, c)) = show $ itemBody c
--- mkGridHtml (Cell (_, c)) tpl ctx = applyTemplate tpl ctx c
--- mkGridHtml (Row r) tpl ctx = foldl f (return (makeItem "")) r
---   where
---     f acc g = compMap (\e -> acc ++ e) r
---       where
---         r = case g of
---           -- Cell (w, c) -> "<li>" ++ show w ++ "</li>"
---           -- row -> "<ul>" ++ mkGridHtml row ++ "</ul>"
---           -- cell@(Cell (w, c)) -> "<li>" ++ (mkGridHtml cell tpl ctx) ++ "</li>"
---           -- row -> "<ul>" ++ (mkGridHtml row tpl ctx) ++ "</ul>"
---           cell@(Cell (w, c)) -> compMap (\e -> "<li>" ++ e ++ "</li>") (mkGridHtml cell tpl ctx)
---           row -> compMap (\e -> "<ul>" ++ e ++ "</ul>") (mkGridHtml row tpl ctx)
---         compMap f comp = map (\x -> map f x) comp
-
--- mkGridHtml :: (Show a) => Grid (Weight, Item a) -> String
--- -- mkGridHtml (Cell (_, c)) = show $ itemBody c
--- mkGridHtml (Cell (_, c)) = "body"
--- mkGridHtml (Row r) = foldl f "" r
---   where
---     f acc g = acc ++ r
---       where
---         r = case g of
---           Cell (w, c) -> "<li>" ++ show w ++ "</li>"
---           row -> "<ul>" ++ mkGridHtml row ++ "</ul>"
 
 gridCtx :: (Show a) => String -> Grid (Weight, Item a) -> Context String
 gridCtx name grid =
@@ -216,26 +141,11 @@ gridCtx name grid =
   -- constField name (mkGridHtml grid) <>
   defaultContext
 
--- gridCtx :: String -> Grid (Weight, Item a) -> Context String
--- gridCtx name grid =
---   constField name "TEst" <>
---   defaultContext
-
-
 --------------------------------------------------------------------------------
 postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" <>
     defaultContext
-    -- dateField "date" "%B %e, %Y" `mappend`
-    -- metadataField `mappend`
-    -- defaultContext
-
--- gridField :: String -> Context a -> Compiler [Item a] -> Context String
--- gridField name itemCtx items = listFieldWith "posts" itemCtx f
---   where
---     f item = do
---       is <- 
 
 
 
