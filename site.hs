@@ -1,9 +1,8 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
-import Data.Monoid (mappend, (<>))
+{-# LANGUAGE FlexibleContexts #-}
+import Data.Monoid ((<>))
 import Hakyll
-
-import Debug.Trace (traceShow)
 
 -- data Grid a = Cell a | Row [Grid a] deriving (Foldable)
 data Grid a = Cell a | Row [Grid a] deriving (Show)
@@ -18,16 +17,11 @@ testList :: [String]
 -- testList = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
 testList = ["a", "b", "c", "d", "e", "f"]
 
-testLayout :: Grid Int
-testLayout = Row
-  [ Cell 1, Row [Cell 1, Cell 2]
-  -- [ Row [Cell 1]
-  ]
-
 type Weight = Int
 type Layout = Grid Weight
 
-fillGrid :: (Show a) => Layout -> [a] -> ([a], Grid (Weight, a))
+-- fillGrid :: (Show a) => Layout -> [a] -> ([a], Grid (Weight, a))
+fillGrid :: Layout -> [a] -> ([a], Grid (Weight, a))
 fillGrid (Cell _) [] = ([], Row [])
 fillGrid (Cell w) (i:is) = (is, Cell (w, i))
 fillGrid (Row r) items = foldl f initAcc r
@@ -42,9 +36,9 @@ fillGrid (Row r) items = foldl f initAcc r
 
 gridConcat :: Grid a -> Grid a -> Grid a
 gridConcat (Row a) (Row b) = Row $ a ++ b
-gridConcat (Row a) (Cell b) = Row $ a ++ [(Cell b)]
+gridConcat (Row a) (Cell b) = Row $ a ++ [Cell b]
 gridConcat (Cell a) (Cell b) = Row [Cell a, Cell b]
-gridConcat (Cell a) (Row b) = Row $ [Cell a] ++ b
+gridConcat (Cell a) (Row b) = Row $ Cell a:b
 
 --------------------------------------------------------------------------------
 main :: IO ()
@@ -101,8 +95,9 @@ main = do
         compile $ do
             posts <- recentFirst =<< loadAll "posts/code/*"
             let indexCtx =
-                    listField "posts" postCtx (return posts) `mappend`
+                    listField "posts" postCtx (return posts) <>
                     -- gridField "posts" postCtx (return posts) <>
+                    gridCtx "items" (snd (fillGrid defLayout posts)) <>
                     constField "title" "Home" <>
                     defaultContext
 
@@ -112,6 +107,28 @@ main = do
                 >>= relativizeUrls
 
     match "templates/*" $ compile templateBodyCompiler
+
+mkGridHtml :: (Show a) => Grid (Weight, Item a) -> String
+-- mkGridHtml (Cell (_, c)) = show $ itemBody c
+mkGridHtml (Cell (_, c)) = "body"
+mkGridHtml (Row r) = foldl f "" r
+  where
+    f acc g = acc ++ r
+      where
+        r = case g of
+          Cell (w, c) -> "<li>" ++ show w ++ "</li>"
+          row -> "<ul>" ++ mkGridHtml row ++ "</ul>"
+
+gridCtx :: (Show a) => String -> Grid (Weight, Item a) -> Context String
+gridCtx name grid =
+  -- constField name "TEst" <>
+  constField name (mkGridHtml grid) <>
+  defaultContext
+
+-- gridCtx :: String -> Grid (Weight, Item a) -> Context String
+-- gridCtx name grid =
+--   constField name "TEst" <>
+--   defaultContext
 
 
 --------------------------------------------------------------------------------
