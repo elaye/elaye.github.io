@@ -4,6 +4,8 @@
 import Data.Monoid ((<>))
 import Hakyll
 
+import Debug.Trace (traceShow)
+
 -- data Grid a = Cell a | Row [Grid a] deriving (Foldable)
 data Grid a = Cell a | Row [Grid a] deriving (Show)
 
@@ -43,9 +45,9 @@ gridConcat (Cell a) (Row b) = Row $ Cell a:b
 --------------------------------------------------------------------------------
 main :: IO ()
 main = do
-  let (l, grid) = fillGrid defLayout testList
-  print grid
-  print l
+  -- let (l, grid) = fillGrid defLayout testList
+  -- print grid
+  -- print l
   hakyll $ do
     match "images/**" $ do
         route   idRoute
@@ -125,9 +127,10 @@ main = do
 -- mkGridHtml :: (Show a) => Grid (Weight, Item a) -> String
 mkGridHtml :: (Show a) => Grid (Weight, Item a) -> Template -> Context a -> Compiler (Item String)
 -- mkGridHtml (Cell (_, c)) = show $ itemBody c
-mkGridHtml (Cell (_, c)) tpl ctx = do
-  li <- applyTemplate tpl ctx c
-  makeItem $ "<li>" ++ (itemBody li) ++ "</li>"
+-- mkGridHtml (Cell (_, c)) tpl ctx = do
+--   li <- applyTemplate tpl ctx c
+--   makeItem $ "<li>" ++ (traceShow li (itemBody li)) ++ "</li>"
+mkGridHtml (Cell (_, c)) tpl ctx = applyTemplate tpl ctx c
 mkGridHtml (Row r) tpl ctx = do
   -- let
   --   f acc g = makeItem $ acc ++ (itemBody r)
@@ -148,7 +151,7 @@ mkGridHtml (Row r) tpl ctx = do
 -- ulFolder :: Item String -> String -> String
 ulFolder :: String -> Item String -> String
 -- ulFolder item acc = (itemBody item) ++ acc
-ulFolder acc item = (itemBody item) ++ acc
+ulFolder acc item = acc ++ (itemBody item)
 
 -- -- mkGridHtml :: (Show a) => Grid (Weight, Item a) -> String
 -- mkGridHtml :: (Show a) => Grid (Weight, Item a) -> Template -> Context a -> Compiler (Item String)
