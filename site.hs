@@ -9,17 +9,33 @@ import Debug.Trace (traceShow)
 -- data Grid a = Cell a | Row [Grid a] deriving (Foldable)
 data Grid a = Cell a | Row [Grid a] deriving (Show)
 
-defLayout :: Grid Int
+data Weight = Weight Int deriving (Show)
+
+row211 :: Grid Weight
+row211 = Row [Cell (Weight 2), Row [Cell (Weight 1), Cell (Weight 1)]]
+
+row112 :: Grid Weight
+row112 = Row [Row [Cell (Weight 1), Cell (Weight 1)], Cell (Weight 2)]
+
+row11 :: Grid Weight
+row11 = Row [Cell (Weight 1), Cell (Weight 1)]
+
+row11111 :: Grid Weight
+row11111 = Row [ Cell (Weight 1), Row [Row [Cell (Weight 1), Cell (Weight 1)], Row [Cell (Weight 1), Cell (Weight 1)]]]
+
+defLayout :: Grid Weight
 defLayout = Row
-  [ Row [Cell 2, Row [Row [Cell 1, Cell 1], Row [Cell 1, Cell 1]]]
-  , Row [Cell 1, Cell 1, Cell 1]
+  -- [ Row [Cell (Weight 2), Row [Row [Cell (Weight 1), Cell (Weight 1)], Row [Cell (Weight 1), Cell (Weight 1)]]]
+  [ row11111
+  , row112
+  , row11
+  , row211
   ]
 
 testList :: [String]
 -- testList = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
 testList = ["a", "b", "c", "d", "e", "f"]
 
-type Weight = Int
 type Layout = Grid Weight
 
 -- fillGrid :: (Show a) => Layout -> [a] -> ([a], Grid (Weight, a))
@@ -55,7 +71,8 @@ main = do
 
     match "css/*" $ do
         route   idRoute
-        compile compressCssCompiler
+        -- compile $ compressCssCompiler >>= relativizeUrls
+        compile $ compressCssCompiler
 
     match (fromList ["about.rst", "contact.markdown"]) $ do
         route   $ setExtension "html"
@@ -113,62 +130,77 @@ main = do
       compile $ do
         posts <- recentFirst =<< loadAll "posts/code/*"
         liTpl <- loadBody "templates/grid-item.html"
-        ulTpl <- loadBody "templates/grid.html"
+        -- ulTpl <- loadBody "templates/grid.html"
         let grid = snd $ fillGrid defLayout posts
-        -- let indexCtx = defaultContext
-        -- pandocCompiler >>= applyTemplate itemTpl defaultContext
-        -- pandocCompiler >>= applyTemplateGrid itemTpl defaultContext grid
-        gg <- mkGridHtml grid liTpl ulTpl defaultContext
-        -- let gridHtml = mkGridHtml grid liTpl ulTpl defaultContext
-        -- let indexCtx = field "grid" (\x -> return (itemBody gg)) <> defaultContext
+        gg <- mkGridHtml "grid" Hor grid liTpl liTpl defaultContext
         let indexCtx = constField "grid" (itemBody gg) <> defaultContext
-        -- let indexCtx = field "grid" (gridHtml) <> defaultContext
 
         getResourceBody
-        -- mkGridHtml grid liTpl ulTpl defaultContext
           >>= applyAsTemplate indexCtx
           >>= loadAndApplyTemplate "templates/default.html" indexCtx
-          -- >>= applyAsTemplate indexCtx
 
 
     match "templates/*" $ compile templateBodyCompiler
 
--- applyTemplateGrid :: Template -> Context a -> Grid (Weight, Item a) -> Compiler (Item String)
--- applyTemplateGrid tpl ctx grid = map (applyTemplate ctx) grid
+data Direction = Hor | Vert
 
-mkGridHtml :: (Show a) => Grid (Weight, Item a) -> Template -> Template -> Context a -> Compiler (Item String)
-mkGridHtml (Cell (_, c)) liTpl _ ctx = applyTemplate liTpl ctx c
-mkGridHtml (Row r) liTpl ulTpl ctx = do
-  -- ul <- mapM (\g -> mkGridHtml g liTpl ulTpl ctx) r :: (Compiler [Item String])
-  ul <- mapM (\g -> mkGridHtml g liTpl ulTpl ctx) r :: (Compiler [Item String])
-  -- let ul = mapM (\g -> mkGridHtml g liTpl ulTpl ctx) r :: (Compiler [Item String])
-  -- let uls = concatMap itemBody ul
-  -- uls <- makeItem $ concatMap itemBody ul
-  -- let uctx = listField "items" defaultContext ul <> ulCtx
-  -- applyTemplate ulTpl uctx uls
-  -- pandocCompiler >>= applyTemplate ulTpl uctx
-  -- let uls = foldl ulFolder "" ul :: String
+-- mkGridHtml :: (Show a) => String -> Direction -> Grid (a, Item a) -> Template -> Template -> Context a -> Compiler (Item String)
+mkGridHtml _ _ (Cell (w, c)) liTpl _ ctx = applyTemplate liTpl (cellCtx w) c
+mkGridHtml cls dir grid@(Row r) liTpl ulTpl ctx = do
+  let cl = case dir of
+          Hor -> "grid__row"
+          Vert -> "grid__col"
+  ul <- mapM (\g -> mkGridHtml cl (ortho dir) g liTpl ulTpl ctx) r :: (Compiler [Item String])
   let uls = concatMap itemBody ul
-  makeItem $ "<ul>" ++ uls ++ "</ul>"
-
+  let height = case dir of
+        -- Vert -> "height: calc(100vw * 9 / 16 * " ++ (show (heightRatio grid)) ++ ");"
+        Vert -> "height: calc(100vw * 9 / 16 * " ++ (show (heightRatio grid)) ++ ");"
+        Hor -> "height: 100%;"
+  makeItem $ "<ul class=\"" ++ cls ++ "\" style=\"" ++ height ++ "\">" ++ uls ++ "</ul>"
 
 ulCtx :: Context String
 ulCtx = constField "class" "ul-class" <> defaultContext
 
--- mkGridHtml :: (Show a) => Grid (Weight, Item a) -> Template -> Context a -> Compiler (Item String)
--- mkGridHtml (Cell (_, c)) tpl ctx = applyTemplate tpl ctx c
--- mkGridHtml (Row r) tpl ctx = do
---   ul <- mapM (\g -> mkGridHtml g tpl ctx) r :: (Compiler [Item String])
---   let uls = foldl ulFolder "" ul :: String
---   makeItem $ "<ul>" ++ uls ++ "</ul>"
+-- Calculate a ratio for the row height
+-- depending on the flex-grow of its elements
+-- and the total number of elements.
+-- This ratio expresses the fact that the row height depends
+-- on the height of its biggest element.
+heightRatio :: Grid (Weight, Item a) -> Float
+heightRatio (Cell _) = 1
+heightRatio (Row row) = (fromIntegral max) / (fromIntegral sum)
+  where
+    (max, sum) = foldl f init row
+    init = (0, 0) :: (Int, Int)
+    f (flexMax, flexSum) e = case e of
+      -- A sub-row is considered having a flex-grow of 1
+      Row r -> (flexMax, flexSum + 1)
+      Cell ((Weight w), _) -> ((Prelude.max flexMax w), flexSum + w)
 
-ulFolder :: String -> Item String -> String
-ulFolder acc item = acc ++ (itemBody item)
+-- 	-- flexRatio(layout) {
+-- 		const r = layout.reduce((r, cell) => {
+-- 			if (Array.isArray(cell)) {
+-- 				// A sub-array is considered having a flex-grow of 1
+-- 				r.flexSum += 1;
+-- 				return r;
+-- 			}
+-- 			const { flexMax, flexSum } = r;
+-- 			return {
+-- 				flexMax: cell > flexMax ? cell : flexMax,
+-- 				flexSum: flexSum + cell,
+-- 			};
+-- 		}, { flexMax: 0, flexSum: 0 });
+-- 		return r.flexMax / r.flexSum;
+-- }
 
-gridCtx :: (Show a) => String -> Grid (Weight, Item a) -> Context String
-gridCtx name grid =
-  constField name "TEst" <>
-  -- constField name (mkGridHtml grid) <>
+ortho :: Direction -> Direction
+ortho dir = case dir of
+  Hor -> Vert
+  Vert -> Hor
+
+cellCtx ::  Weight -> Context String
+cellCtx (Weight w) =
+  constField "weight" (show w) <>
   defaultContext
 
 --------------------------------------------------------------------------------
