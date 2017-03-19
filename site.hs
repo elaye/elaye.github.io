@@ -112,11 +112,23 @@ main = do
       route idRoute
       compile $ do
         posts <- recentFirst =<< loadAll "posts/code/*"
-        itemTpl <- loadBody "templates/grid-item.html"
+        liTpl <- loadBody "templates/grid-item.html"
+        ulTpl <- loadBody "templates/grid.html"
         let grid = snd $ fillGrid defLayout posts
+        -- let indexCtx = defaultContext
         -- pandocCompiler >>= applyTemplate itemTpl defaultContext
         -- pandocCompiler >>= applyTemplateGrid itemTpl defaultContext grid
-        mkGridHtml grid itemTpl defaultContext
+        gg <- mkGridHtml grid liTpl ulTpl defaultContext
+        -- let gridHtml = mkGridHtml grid liTpl ulTpl defaultContext
+        -- let indexCtx = field "grid" (\x -> return (itemBody gg)) <> defaultContext
+        let indexCtx = constField "grid" (itemBody gg) <> defaultContext
+        -- let indexCtx = field "grid" (gridHtml) <> defaultContext
+
+        getResourceBody
+        -- mkGridHtml grid liTpl ulTpl defaultContext
+          >>= applyAsTemplate indexCtx
+          >>= loadAndApplyTemplate "templates/default.html" indexCtx
+          -- >>= applyAsTemplate indexCtx
 
 
     match "templates/*" $ compile templateBodyCompiler
@@ -124,13 +136,31 @@ main = do
 -- applyTemplateGrid :: Template -> Context a -> Grid (Weight, Item a) -> Compiler (Item String)
 -- applyTemplateGrid tpl ctx grid = map (applyTemplate ctx) grid
 
--- mkGridHtml :: (Show a) => Grid (Weight, Item a) -> String
-mkGridHtml :: (Show a) => Grid (Weight, Item a) -> Template -> Context a -> Compiler (Item String)
-mkGridHtml (Cell (_, c)) tpl ctx = applyTemplate tpl ctx c
-mkGridHtml (Row r) tpl ctx = do
-  ul <- mapM (\g -> mkGridHtml g tpl ctx) r :: (Compiler [Item String])
-  let uls = foldl ulFolder "" ul :: String
+mkGridHtml :: (Show a) => Grid (Weight, Item a) -> Template -> Template -> Context a -> Compiler (Item String)
+mkGridHtml (Cell (_, c)) liTpl _ ctx = applyTemplate liTpl ctx c
+mkGridHtml (Row r) liTpl ulTpl ctx = do
+  -- ul <- mapM (\g -> mkGridHtml g liTpl ulTpl ctx) r :: (Compiler [Item String])
+  ul <- mapM (\g -> mkGridHtml g liTpl ulTpl ctx) r :: (Compiler [Item String])
+  -- let ul = mapM (\g -> mkGridHtml g liTpl ulTpl ctx) r :: (Compiler [Item String])
+  -- let uls = concatMap itemBody ul
+  -- uls <- makeItem $ concatMap itemBody ul
+  -- let uctx = listField "items" defaultContext ul <> ulCtx
+  -- applyTemplate ulTpl uctx uls
+  -- pandocCompiler >>= applyTemplate ulTpl uctx
+  -- let uls = foldl ulFolder "" ul :: String
+  let uls = concatMap itemBody ul
   makeItem $ "<ul>" ++ uls ++ "</ul>"
+
+
+ulCtx :: Context String
+ulCtx = constField "class" "ul-class" <> defaultContext
+
+-- mkGridHtml :: (Show a) => Grid (Weight, Item a) -> Template -> Context a -> Compiler (Item String)
+-- mkGridHtml (Cell (_, c)) tpl ctx = applyTemplate tpl ctx c
+-- mkGridHtml (Row r) tpl ctx = do
+--   ul <- mapM (\g -> mkGridHtml g tpl ctx) r :: (Compiler [Item String])
+--   let uls = foldl ulFolder "" ul :: String
+--   makeItem $ "<ul>" ++ uls ++ "</ul>"
 
 ulFolder :: String -> Item String -> String
 ulFolder acc item = acc ++ (itemBody item)
