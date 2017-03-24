@@ -4,6 +4,8 @@
 import Data.Monoid ((<>))
 import Hakyll
 
+import Data.List (sortBy)
+
 import Debug.Trace (traceShow)
 
 -- data Grid a = Cell a | Row [Grid a] deriving (Foldable)
@@ -73,12 +75,15 @@ main = do
         -- No route here
         compile compressCssCompiler
 
-    -- create ["css/main.css"] $ do
     create ["main.css"] $ do
         route idRoute
         compile $ do
             items <- loadAll "css/*" :: Compiler [Item String]
-            makeItem $ concatMap itemBody items
+            -- We want reset.css to be first otherwise it will override our styles
+            let
+              orderedStyles = sortBy sortFn items
+              sortFn a b = if itemIdentifier a == fromFilePath "css/reset.css" then LT else GT
+            makeItem $ concatMap itemBody $ traceShow orderedStyles orderedStyles
 
     -- match "css/*" $ do
     --     route   idRoute
