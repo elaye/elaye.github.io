@@ -69,10 +69,21 @@ main = do
         route   idRoute
         compile copyFileCompiler
 
-    match "css/*" $ do
-        route   idRoute
-        -- compile $ compressCssCompiler >>= relativizeUrls
-        compile $ compressCssCompiler
+    match "css/*" $
+        -- No route here
+        compile compressCssCompiler
+
+    -- create ["css/main.css"] $ do
+    create ["main.css"] $ do
+        route idRoute
+        compile $ do
+            items <- loadAll "css/*" :: Compiler [Item String]
+            makeItem $ concatMap itemBody items
+
+    -- match "css/*" $ do
+    --     route   idRoute
+    --     -- compile $ compressCssCompiler >>= relativizeUrls
+    --     compile $ compressCssCompiler
 
     match (fromList ["about.rst", "contact.markdown"]) $ do
         route   $ setExtension "html"
