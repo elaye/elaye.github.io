@@ -126,6 +126,7 @@ th {
 
 tr {
     border-bottom: solid 1px grey;
+    line-height: 1.8;
 }
 
 tr:last-child {
@@ -138,4 +139,13 @@ tr tr {
 
 tr th {
     border-top: none;
+}
+
+.rating {
+    font-family: monospace;
+    font-size: 22px;
+}
+
+.rating span {
+    margin: 0 5px;
 }

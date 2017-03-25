@@ -4,11 +4,14 @@ import Data.Monoid ((<>))
 import Hakyll
 
 import Grid (gridField)
+import Rating (ratingField)
 
 import Data.List (sortBy)
 
 main :: IO ()
 main = hakyll $ do
+    match "templates/*" $ compile templateBodyCompiler
+
     match "images/**" $ do
         route   idRoute
         compile copyFileCompiler
@@ -27,12 +30,6 @@ main = hakyll $ do
               orderedStyles = sortBy sortFn items
               sortFn a b = if itemIdentifier a == fromFilePath "css/reset.css" then LT else GT
             makeItem $ concatMap itemBody orderedStyles
-
-    match (fromList ["about.html", "contact.markdown"]) $ do
-        route   $ setExtension "html"
-        compile $ getResourceBody
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls
 
     match "posts/*" $ do
         route $ setExtension "html"
@@ -58,8 +55,15 @@ main = hakyll $ do
           >>= loadAndApplyTemplate "templates/default.html" ctx
           >>= relativizeUrls
 
+    match "about.html" $ do
+        route   $ setExtension "html"
+        compile $ do
+          let ctx = ratingField "rating" <> defaultContext
+          getResourceBody
+            >>= applyAsTemplate ctx
+            >>= loadAndApplyTemplate "templates/default.html" ctx
+            >>= relativizeUrls
 
-    match "templates/*" $ compile templateBodyCompiler
 
 postCtx :: Context String
 postCtx =
