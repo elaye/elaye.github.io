@@ -99,8 +99,8 @@ main = do
       route idRoute
       compile $ do
         posts <- recentFirst =<< loadAll "posts/code/*"
-        liTpl <- loadBody "templates/grid-item.html"
-        ulTpl <- loadBody "templates/grid.html"
+        liTpl <- loadBody "templates/grid-cell.html"
+        ulTpl <- loadBody "templates/grid-group.html"
         let grid = snd $ fillGrid defLayout posts
         gg <- mkGridHtml "grid" Vert grid liTpl ulTpl defaultContext
         let indexCtx = constField "grid" (itemBody gg) <> defaultContext
