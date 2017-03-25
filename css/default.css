@@ -108,6 +108,10 @@ article {
     max-width: 800px;
 }
 
+figure {
+    background-color: #FAFAFA;
+}
+
 table {
     width: 100%;
     text-align: left;
