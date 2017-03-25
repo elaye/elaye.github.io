@@ -31,16 +31,9 @@ main = hakyll $ do
               sortFn a b = if itemIdentifier a == fromFilePath "css/reset.css" then LT else GT
             makeItem $ concatMap itemBody orderedStyles
 
-    match "posts/*" $ do
-        route $ setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/post.html"    postCtx
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
-            >>= relativizeUrls
-
     match "posts/code/*" $ do
         route $ setExtension "html"
-        compile $ pandocCompiler
+        compile $ getResourceBody
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
