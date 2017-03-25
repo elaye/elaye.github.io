@@ -83,7 +83,7 @@ main = do
             let
               orderedStyles = sortBy sortFn items
               sortFn a b = if itemIdentifier a == fromFilePath "css/reset.css" then LT else GT
-            makeItem $ concatMap itemBody $ traceShow orderedStyles orderedStyles
+            makeItem $ concatMap itemBody orderedStyles
 
     -- match "css/*" $ do
     --     route   idRoute
@@ -92,7 +92,7 @@ main = do
 
     match (fromList ["about.html", "contact.markdown"]) $ do
         route   $ setExtension "html"
-        compile $ pandocCompiler
+        compile $ getResourceBody
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls
 
