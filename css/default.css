@@ -1,0 +1,114 @@
+* {
+    /* Alice blue */
+    color: #F0F8FF
+}
+
+body {
+    color: white;
+    background-color: #0a0e1c;
+    font-size: 16px;
+    margin: 0px auto 0px auto;
+    font-family: Helvetica, Arial, Sans-Serif; /* To override reset.css */
+}
+
+header {
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: solid 1px grey;
+}
+
+nav {
+    text-align: right;
+    width: 100%;
+}
+
+nav a {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 12px;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-bottom-width: 0px;
+    border-style: solid;
+    transition: border 300ms;
+}
+
+nav a:hover {
+    border-style: solid;
+    border-color: white;
+    border-bottom-width: 4px;
+    transition: border 300ms;
+}
+
+footer {
+    border-top: solid 2px white;
+    color: #555;
+    font-size: 12px;
+    margin-top: 30px;
+    padding: 12px 0px 12px 0px;
+    text-align: right;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+img {
+    width: 100%;
+}
+
+div.info {
+    color: #555;
+    font-size: 14px;
+    font-style: italic;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+article {
+    width: 80%;
+    max-width: 800px;
+}
+
+table {
+    width: 100%;
+    text-align: left;
+}
+
+tbody {
+    margin-top: 50px;
+}
+
+th {
+    border-bottom: solid 1px white;
+    font-weight: bold;
+    padding-top: 40px;
+    height: 20px;
+}
+
+tr {
+    border-bottom: solid 1px grey;
+}
+
+tr:last-child {
+    border: none;
+}
+
+tr tr {
+    border-bottom: none;
+}
+
+tr th {
+    border-top: none;
+}
