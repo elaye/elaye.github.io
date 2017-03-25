@@ -3,7 +3,7 @@
     flex-direction: column;
     flex: auto;
     width: 100%;
-    border: 4px solid #0a0e1c;
+    padding: 4px;
     box-sizing: border-box;
 }
 
@@ -27,7 +27,7 @@
     /* flex: auto; */
     overflow: hidden;
     position: relative;
-    border: 8px solid #0a0e1c;
+    border: 8px solid transparent;
     box-sizing: border-box;
 }
 
