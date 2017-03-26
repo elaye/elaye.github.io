@@ -19,33 +19,6 @@ header {
     border-bottom: solid 1px grey;
 }
 
-.menu {
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 22px;
-}
-
-@media (min-width: 768px) {
-    .menu {
-        display: none;
-    }
-}
-
-@media (max-width: 768px) {
-    #nav a, menu {
-        display: none;
-    }
-    #nav:not(:target) .menu-open {
-        display: block;
-    }
-    #nav:target .menu-open {
-        display: none;
-    }
-    #nav:target a {
-        display: block;
-    }
-}
-
 nav {
     text-align: right;
     width: 100%;

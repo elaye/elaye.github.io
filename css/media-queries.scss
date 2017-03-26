@@ -1,0 +1,27 @@
+/* break points */
+$bp-mobile: 320px;
+$bp-phablet: 540px;
+$bp-tablet-height: 768px;
+$bp-tablet-width: 1024px;
+$bp-desktop: 1366px;
+$bp-large-desktop: 1500px;
+
+/*
+	[media queries]
+	Ideally we should be building mobile-first, this is why
+	there are no pre-defined media queries to address small
+	devices. If in need of a more specific media query var,
+	either define it here or simply use the breakpoint vars
+	above to write the custom media query inside the
+	component's stylesheet.
+*/
+$mq-phablet-up: (min-width: $bp-phablet);
+$mq-tablet-portrait-up: (min-width: $bp-tablet-height);
+$mq-tablet-landscape-up: (min-width: $bp-tablet-width);
+
+/*
+	[usage example]
+	@media $mq-tablet-and-above {
+		...
+	}
+*/
