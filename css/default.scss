@@ -1,3 +1,5 @@
+@import './vars.scss';
+
 * {
     /* Alice blue */
     color: #F0F8FF
@@ -6,9 +8,21 @@
 body {
     color: white;
     background-color: #0a0e1c;
-    font-size: 16px;
-    margin: 0px auto 0px auto;
-    font-family: Helvetica, Arial, Sans-Serif; /* To override reset.css */
+    font-size: $base-font-size;
+    font-family: $base-font-family; /* To override reset.css */
+}
+
+/* Set `margin-bottom` to maintain vertical rhythm */
+h1, h2, h3, h4, h5, h6,
+p, blockquote, pre,
+ul, ol, dl, figure,
+%vertical-rhythm {
+    margin-bottom: $spacing-unit / 2;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 300;
 }
 
 header {
@@ -60,6 +74,11 @@ h2 {
     font-size: 20px;
 }
 
+p {
+    line-height: 1.5;
+    margin-top: 1.8em;
+}
+
 img {
     width: 100%;
 }
@@ -79,6 +98,7 @@ main {
 article {
     width: 80%;
     max-width: 800px;
+    padding-top: $spacing-unit;
 }
 
 figure {
