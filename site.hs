@@ -7,10 +7,6 @@ import Hakyll.Web.Sass (sassCompiler)
 import Grid (gridField)
 import Rating (ratingField)
 
-import Data.List (sortBy)
-
-import Debug.Trace (traceShow)
-
 main :: IO ()
 main = hakyll $ do
     match "templates/*" $ compile templateBodyCompiler
@@ -19,24 +15,9 @@ main = hakyll $ do
         route   idRoute
         compile copyFileCompiler
 
-    -- match "css/*" $
-    --     -- No route here
-    --     compile compressCssCompiler
-
-    -- -- Put all css in one file
-    -- create ["main.css"] $ do
-    --     route idRoute
-    --     compile $ do
-    --         items <- loadAll "css/*" :: Compiler [Item String]
-    --         -- We want reset.css to be first otherwise it will override our styles
-    --         let
-    --           orderedStyles = sortBy sortFn items
-    --           sortFn a b = if itemIdentifier a == fromFilePath "css/reset.css" then LT else GT
-    --         makeItem $ concatMap itemBody orderedStyles
-
     match "css/*.scss" $ do
       route $ setExtension "css"
-      let compressCssItem = traceShow "$$$$ sass" $ fmap compressCss
+      let compressCssItem = fmap compressCss
       compile (compressCssItem <$> sassCompiler)
 
     match "posts/*/*/images/*" $ do
@@ -74,19 +55,3 @@ postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" <>
     defaultContext
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
