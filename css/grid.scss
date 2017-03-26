@@ -12,10 +12,13 @@
 .grid__row {
     display: flex;
     flex: auto;
-    flex-direction: row;
+    flex-direction: column;
 
+    @media (min-width: $bp-phablet) {
+        flex-direction: row;
+    }
+    /* override inline height on mobile */
     @media (max-width: $bp-phablet) {
-        flex-direction: column;
         height: auto !important;
     }
 }
@@ -27,18 +30,17 @@
 }
 
 .grid__cell {
-    /* width: 100%; */
     display: flex;
     flex-direction: column;
-    /* flex: auto; */
     overflow: hidden;
     position: relative;
     border: 8px solid transparent;
     box-sizing: border-box;
+    /* 100vw * 9 / 16 */
+    height: 56.25vw;
 
-    @media (max-width: $bp-phablet) {
-        /* 100vw * 9 / 16 */
-        height: 56.25vw;
+    @media (min-width: $bp-phablet) {
+        height: auto;
     }
 }
 
@@ -69,11 +71,9 @@
     text-align: center;
     font-size: 24px;
     font-weight: bold;
-    /* height: 100%; */
     transform: translate(-50%, -50%);
     transition: opacity 500ms ease-out;
     opacity: 0;
-    /* color: #333333; */
 }
 
 .grid__cell:hover .grid__cell--title {
