@@ -28,12 +28,10 @@ row112 = Row [Row [Cell (Weight 1), Cell (Weight 1)], Cell (Weight 2)]
 row11 :: Grid Weight
 row11 = Row [Cell (Weight 1), Cell (Weight 1)]
 
-row11111 :: Grid Weight
-row11111 = Row [ Cell (Weight 1), Row [Row [Cell (Weight 1), Cell (Weight 1)], Row [Cell (Weight 1), Cell (Weight 1)]]]
-
+-- No more than 3 tiles per row, otherwise it looks weird on tablet
 defLayout :: Grid Weight
 defLayout = Row
-  [ row11111
+  [ row211
   , row112
   , row11
   , row211
