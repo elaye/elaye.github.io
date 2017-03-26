@@ -39,7 +39,11 @@ main = hakyll $ do
       let compressCssItem = traceShow "$$$$ sass" $ fmap compressCss
       compile (compressCssItem <$> sassCompiler)
 
-    match "posts/code/*" $ do
+    match "posts/*/*/images/*" $ do
+      route idRoute
+      compile copyFileCompiler
+
+    match "posts/code/*/*" $ do
         route $ setExtension "html"
         compile $ getResourceBody
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
@@ -49,7 +53,7 @@ main = hakyll $ do
     match "index.html" $ do
       route idRoute
       compile $ do
-        posts <- recentFirst =<< loadAll "posts/code/*"
+        posts <- recentFirst =<< loadAll "posts/code/*/*"
         let ctx = gridField "grid" posts <> defaultContext
         getResourceBody
           >>= applyAsTemplate ctx
