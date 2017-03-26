@@ -60,7 +60,7 @@
 }
 
 
-@media (min-width: $bp-tablet-width) {
+@media (min-width: $bp-tablet-width-max) {
     .grid__cell:hover .grid__cell--background {
         filter: brightness(0.7) contrast(90%) grayscale(100%);
         transform: scale(1.05);
@@ -78,7 +78,7 @@
     line-height: 1.5;
     background-color: $c-black-translucent;
 
-    @media (min-width: $bp-tablet-width) {
+    @media (min-width: $bp-tablet-width-max) {
         width: 80%;
         top: 50%;
         left: 50%;
