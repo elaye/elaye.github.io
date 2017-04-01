@@ -1,7 +1,16 @@
 $c-black: rgb(0, 0, 0);
 $c-white: rgb(255, 255, 255);
 
+/* Alice blue */
+$c-blue-lighter: #F0F8FF;
+$c-blue-dark: #0A0E1C;
+
 $c-black-translucent: rgba(0, 0, 0, 0.5);
+
+$c-shadow: rgba(0, 0, 75, 0.2);
 
 $c-off-black: #030303;
 $c-off-white: #FCFCFC;
+
+$c-fg: $c-off-black;
+$c-bg: $c-off-white;

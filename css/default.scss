@@ -1,13 +1,13 @@
 @import './vars.scss';
+@import './colors.scss';
 
 * {
-    /* Alice blue */
-    color: #F0F8FF
+    color: $c-fg;
 }
 
 body {
-    color: white;
-    background-color: #0a0e1c;
+    color: $c-fg;
+    background-color: $c-bg;
     font-size: $base-font-size;
     font-family: $base-font-family; /* To override reset.css */
 }
@@ -30,7 +30,8 @@ header {
     display: flex;
     flex-direction: row;
     align-items: center;
-    border-bottom: solid 1px grey;
+    /* border-bottom: solid 2px $c-black-translucent; */
+    box-shadow: 0 5px 10px $c-shadow;
 }
 
 nav {
@@ -39,7 +40,7 @@ nav {
 }
 
 nav a {
-    color: white;
+    color: $c-fg;
     font-size: 18px;
     font-weight: bold;
     margin-left: 12px;
@@ -52,13 +53,13 @@ nav a {
 
 nav a:hover {
     border-style: solid;
-    border-color: white;
+    border-color: $c-fg;
     border-bottom-width: 4px;
     transition: border 300ms;
 }
 
 footer {
-    border-top: solid 2px white;
+    border-top: solid 2px $c-fg;
     color: #555;
     font-size: 12px;
     margin-top: 30px;

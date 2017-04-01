@@ -78,6 +78,7 @@
     font-weight: bold;
     line-height: 1.5;
     background-color: $c-black-translucent;
+    color: $c-bg;
 
     @media (min-width: $bp-tablet-width-max) {
         width: 80%;
@@ -94,6 +95,5 @@
 }
 
 .grid__cell:hover .grid__cell--title {
-    color: white;
     opacity: 1;
 }
