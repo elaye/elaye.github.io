@@ -1,0 +1,87 @@
+---
+title:  "Spirograph"
+date:   2015-03-12 13:45:00
+heroUrl: "./images/hero.png"
+notes: 'Check out the <a href="/demo_spirograph/index.html">live demo <i class="fa fa-cube"></i></a><br>Code available on GitHub: <a href="https://github.com/elaye/spirograph" target="_blank">Spirograph <i class="fa fa-github"></i></a>'
+---
+
+Have you ever played with a <a href="https://en.wikipedia.org/wiki/Spirograph" target="_blank">spirograph</a>? For those who don't know, it's a geometric drawing toy. In it's basic form, it comprises a ring and a wheel with little holes in it. To draw with it, you place the wheel inside the ring, you place a pen into one of the holes of the wheel and you move it around the inside of the ring. Here is a schema:
+
+<figure>
+	$img("./images/spirograph.png", "Spirograph diagram")$
+</figure>
+
+All the geometric figures produced by a spirograph can be described by the following parametric curve:
+
+$$
+x(t) = (R-r)\cos t + \rho \cos \frac{R-r}{r}t\\
+y(t) = (R-r)\sin t - \rho \sin \frac{R-r}{r}t
+$$
+
+I made a program with openFrameworks that can draw such curves, it is available on <a href="https://github.com/elaye/spirograph" target="_blank">GitHub</a>.
+
+The amazing thing with this is that a very few number of parameters (3) can produce a huge variety of figures. Here are some of them:
+
+<div class="grid" style="margin: 30px 0;">
+    <div class="grid__row">
+			$img("./images/normal/spirograph_1.png", "Spirograph 1")$
+			$img("./images/normal/spirograph_2.png", "Spirograph 2")$
+			$img("./images/normal/spirograph_3.png", "Spirograph 3")$
+			$img("./images/normal/spirograph_4.png", "Spirograph 4")$
+    </div>
+
+    <div class="grid__row">
+			$img("./images/normal/spirograph_5.png", "Spirograph 5")$
+			$img("./images/normal/spirograph_6.png", "Spirograph 6")$
+			$img("./images/normal/spirograph_7.png", "Spirograph 7")$
+			$img("./images/normal/spirograph_8.png", "Spirograph 8")$
+    </div>
+
+    <div class="grid__row">
+			$img("./images/normal/spirograph_9.png", "Spirograph 9")$
+			$img("./images/normal/spirograph_10.png", "Spirograph 10")$
+			$img("./images/normal/spirograph_11.png", "Spirograph 11")$
+			$img("./images/normal/spirograph_12.png", "Spirograph 12")$
+    </div>
+</div>
+
+After reading <a href="http://www.oftenpaper.net/permanent-cyclotron4000.htm" target="_blank">this</a>, I added a spirality parameter.
+Here are some of the figures I produced using this parameter:
+
+<div class="grid" style="margin: 30px 0;">
+    <div class="grid__row">
+			$img("./images/spiral/spirograph_1.png", "Spirograph 1")$
+			$img("./images/spiral/spirograph_2.png", "Spirograph 2")$
+			$img("./images/spiral/spirograph_3.png", "Spirograph 3")$
+			$img("./images/spiral/spirograph_4.png", "Spirograph 4")$
+    </div>
+
+    <div class="grid__row">
+			$img("./images/spiral/spirograph_5.png", "Spirograph 5")$
+			$img("./images/spiral/spirograph_6.png", "Spirograph 6")$
+			$img("./images/spiral/spirograph_7.png", "Spirograph 7")$
+			$img("./images/spiral/spirograph_8.png", "Spirograph 8")$
+    </div>
+
+    <div class="grid__row">
+			$img("./images/spiral/spirograph_9.png", "Spirograph 9")$
+			$img("./images/spiral/spirograph_10.png", "Spirograph 10")$
+			$img("./images/spiral/spirograph_11.png", "Spirograph 11")$
+			$img("./images/spiral/spirograph_12.png", "Spirograph 12")$
+    </div>
+
+    <div class="grid__row">
+			$img("./images/spiral/spirograph_13.png", "Spirograph 13")$
+			$img("./images/spiral/spirograph_14.png", "Spirograph 14")$
+			$img("./images/spiral/spirograph_15.png", "Spirograph 15")$
+			$img("./images/spiral/spirograph_16.png", "Spirograph 16")$
+    </div>
+
+    <div class="grid__row">
+			$img("./images/spiral/spirograph_17.png", "Spirograph 17")$
+			$img("./images/spiral/spirograph_18.png", "Spirograph 18")$
+			$img("./images/spiral/spirograph_19.png", "Spirograph 19")$
+			$img("./images/spiral/spirograph_20.png", "Spirograph 20")$
+    </div>
+</div>
+

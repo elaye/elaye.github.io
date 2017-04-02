@@ -1,0 +1,29 @@
+---
+title: "ofxCurlNoise"
+date: 2015-02-26 10:51:00
+heroUrl: "./images/img-1024x576-no-exif.jpg"
+---
+
+<p>Curl noise is a faster alternative to simulation for animating fluids, developped by Bridson et al.
+It's a procedural method based on simplex noise that gives a good control over the fluid.</p>
+
+<p><a href="https://github.com/elaye/ofxCurlNoise" target="_blank">ofxCurlNoise</a> is an addon that offers the possibility to create a particle system and apply a curl noise to it, producing nice fluid-like movements.
+The code for the curl noise comes from <a href="https://github.com/dli/flow" target="_blank">dli/flow</a>.</p>
+
+<p>The motion of the particles and the curl noise are calculated with a compute shader, ensuring a fast computation. Since this addon uses compute shaders and OpenGL 4.3, it is only compatible with openFrameworks 0.9.0.</p>
+
+<p>There are still a lot of things to add to this addon, for instance, solid boundaries or some kind of wind effect.</p>
+
+<p>Here is a demo of the addon:</p>
+
+<figure>
+    <iframe src="//player.vimeo.com/video/120776831?portrait=0&title=0&badge=0&byline=0" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</figure>
+
+<figure>
+    $img("./images/screenshot_1.png", "Curl noise screenshot 1")$
+</figure>
+
+<figure>
+		$img("./images/screenshot_2.png", "Curl noise screenshot 2")$
+</figure>
