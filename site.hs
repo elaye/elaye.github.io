@@ -21,7 +21,7 @@ main = hakyll $ do
       let compressCssItem = fmap compressCss
       compile (compressCssItem <$> sassCompiler)
 
-    match "posts/*/*/images/*" $ do
+    match "posts/*/*/images/**" $ do
       route idRoute
       compile copyFileCompiler
 
