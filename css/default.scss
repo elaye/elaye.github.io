@@ -104,6 +104,13 @@ article {
 
 figure {
     background-color: #FAFAFA;
+    display: flex;
+    justify-content: center;
+
+    a {
+        display: inherit;
+        justify-content: inherit;
+    }
 }
 
 table {
