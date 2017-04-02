@@ -4,6 +4,7 @@ module Grid
 ) where
 
 import Data.Monoid ((<>))
+import Data.Maybe (fromMaybe)
 import Hakyll
 
 import Debug.Trace (traceShow)
@@ -101,5 +102,20 @@ ortho dir = case dir of
 cellCtx ::  Weight -> Context String
 cellCtx (Weight w) =
   constField "weight" (show w) <>
+  heroCtx <>
   defaultContext
+
+heroCtx :: Context String
+heroCtx = functionField "hero" $ \args item -> do
+  let iid = itemIdentifier item
+  metadata <- getMetadata iid
+  let
+    missingMetadata name = error $ "Missing " ++ name ++ " for post " ++ show iid
+    metadataVal name = fromMaybe (missingMetadata name) $ lookupString name metadata
+    heroUrl = metadataVal "heroUrl"
+    title = metadataVal "title"
+    cls = if null args then "" else head args
+  imgTpl <- loadBody "templates/img.html"
+  let imgCtx = constField "src" heroUrl <> constField "alt" title <> constField "class" cls
+  itemBody <$> applyTemplate imgTpl imgCtx item
 
