@@ -103,14 +103,30 @@ article {
 }
 
 figure {
+    margin: 20px 0;
     background-color: #FAFAFA;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+        width: 80%;
+    }
 
     a {
         display: inherit;
-        justify-content: inherit;
+        flex-direction: inherit;
+        align-items: inherit;
+
+        img {
+            width: 80%;
+        }
     }
+}
+
+figcaption {
+    margin-top: 20px;
+    font-style: italic;
 }
 
 table {
