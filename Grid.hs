@@ -34,9 +34,9 @@ row11 = Row [Cell (Weight 1), Cell (Weight 1)]
 defLayout :: Grid Weight
 defLayout = Row
   [ row211
-  , Row [Cell (Weight 1)]
+  -- , Row [Cell (Weight 1)]
   -- , row112
-  -- , row11
+  , row11
   -- , row211
   ]
 
