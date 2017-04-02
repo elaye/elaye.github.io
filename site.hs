@@ -53,7 +53,6 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" ctx
             >>= relativizeUrls
 
-
 postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" <>
