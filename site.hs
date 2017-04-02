@@ -5,6 +5,7 @@ import Hakyll
 import Hakyll.Web.Sass (sassCompiler)
 
 import Grid (gridField)
+import Img (imgField)
 import Rating (ratingField)
 
 main :: IO ()
@@ -26,9 +27,11 @@ main = hakyll $ do
 
     match "posts/code/*/*" $ do
         route $ setExtension "html"
+        let ctx = postCtx <> imgField "img"
         compile $ getResourceBody
-            >>= loadAndApplyTemplate "templates/post.html"    postCtx
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= applyAsTemplate ctx
+            >>= loadAndApplyTemplate "templates/post.html" ctx
+            >>= loadAndApplyTemplate "templates/default.html" ctx
             >>= relativizeUrls
 
     match "index.html" $ do
