@@ -121,6 +121,6 @@ heroCtx = functionField "hero" $ \args item -> do
     title = metadataVal "title"
     cls = if null args then "" else head args
   imgTpl <- loadBody "templates/img.html"
-  let imgCtx = constField "src" (traceShow path heroUrl) <> constField "alt" title <> constField "class" cls
+  let imgCtx = constField "src" heroUrl <> constField "alt" title <> constField "class" cls
   itemBody <$> applyTemplate imgTpl imgCtx item
 
