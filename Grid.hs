@@ -5,6 +5,7 @@ module Grid
 
 import Data.Monoid ((<>))
 import Data.Maybe (fromMaybe)
+import System.FilePath (takeDirectory, normalise, (</>))
 import Hakyll
 
 import Debug.Trace (traceShow)
@@ -109,13 +110,16 @@ heroCtx :: Context String
 heroCtx = functionField "hero" $ \args item -> do
   let iid = itemIdentifier item
   metadata <- getMetadata iid
+  path <- fromMaybe "" <$> getRoute iid
   let
     missingMetadata name = error $ "Missing " ++ name ++ " for post " ++ show iid
     metadataVal name = fromMaybe (missingMetadata name) $ lookupString name metadata
-    heroUrl = metadataVal "heroUrl"
+    relHeroUrl = metadataVal "heroUrl"
+    -- To allow relative path for heroUrl
+    heroUrl = (takeDirectory path) </> (normalise relHeroUrl)
     title = metadataVal "title"
     cls = if null args then "" else head args
   imgTpl <- loadBody "templates/img.html"
-  let imgCtx = constField "src" heroUrl <> constField "alt" title <> constField "class" cls
+  let imgCtx = constField "src" (traceShow path heroUrl) <> constField "alt" title <> constField "class" cls
   itemBody <$> applyTemplate imgTpl imgCtx item
 
