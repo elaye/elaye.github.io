@@ -1,5 +1,8 @@
-$c-black: rgb(0, 0, 0);
-$c-white: rgb(255, 255, 255);
+$c-black: rgb(10, 10, 10);
+$c-white: rgb(233, 233, 233);
+$c-grey: rgb(127, 127, 127);
+
+$c-grey-lighter: rgb(233, 233, 233);
 
 /* Alice blue */
 $c-blue-lighter: #F0F8FF;
@@ -9,8 +12,5 @@ $c-black-translucent: rgba(0, 0, 0, 0.5);
 
 $c-shadow: rgba(0, 0, 75, 0.2);
 
-$c-off-black: #030303;
-$c-off-white: #FCFCFC;
-
-$c-fg: $c-off-black;
-$c-bg: $c-off-white;
+$c-fg: $c-black;
+$c-bg: $c-white;
