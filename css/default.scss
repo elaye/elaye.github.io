@@ -26,12 +26,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 header {
+    position: relative;
+    width: 100%;
     padding: 15px 20px;
+    z-index: 10;
     background-color: $c-white;
     display: flex;
+    box-sizing: border-box;
     flex-direction: row;
     align-items: center;
-    /* border-bottom: solid 2px $c-black-translucent; */
     box-shadow: 0 5px 10px $c-shadow;
 }
 
