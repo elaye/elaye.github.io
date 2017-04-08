@@ -53,18 +53,30 @@
     overflow: hidden;
 
     transform: scale(1);
-    filter: brightness(1) contrast(100%) grayscale(0%);
+    transition: transform 300ms;
+}
 
-    transition-property: transform, opacity, filter, color;
-    transition-duration: 300ms;
-    /* transition-timing-function: ease-in; */
+.grid__cell--overlay {
+    opacity: 0;
+    background-color: $c-black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 300ms ease-in;
 }
 
 
 @media (min-width: $bp-tablet-width-max) {
-    .grid__cell:hover .grid__cell--background {
-        filter: brightness(0.7) contrast(90%) grayscale(100%);
-        transform: scale(1.05);
+    .grid__cell:hover {
+        .grid__cell--background {
+            transform: scale(1.05);
+        }
+
+        .grid__cell--overlay {
+            opacity: 0.5;
+        }
     }
 }
 
