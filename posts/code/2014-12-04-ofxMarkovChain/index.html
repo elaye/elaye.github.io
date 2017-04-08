@@ -2,6 +2,7 @@
 title:  "ofxMarkovChain"
 date:   2014-12-04 14:38:00
 heroUrl: "./images/hero.png"
+maths: true
 notes: 'Addon available on Github: <a href="https://github.com/elaye/ofxMarkovChain" target="_blank">ofxMarkovChain</em> <i class="fa fa-github"></i></a>'
 ---
 
@@ -14,18 +15,18 @@ A <a href="https://github.com/elaye/ofxMarkovChain" target="_blank">Markov chain
 </figure>
 <br>
 
-If the system is in the state $$A$$, then the probability to stay in that state is $$0.3$$ and the probability to be in state $$B$$ is $$0.7$$. Now, this system can be represented as a matrix:
+If the system is in the state \(A\), then the probability to stay in that state is \(0.3\) and the probability to be in state \(B\) is \(0.7\). Now, this system can be represented as a matrix:
 
-$$
+\[
 	P = \begin{bmatrix}
 0.3 & 0.7 \\
 0.9 & 0.1
 \end{bmatrix}
-$$
+\]
 
-You can notice that in order for the Markov chain to be coherent, the sum of the coefficients of each row of the matrix must be equal to $$1$$. 
+You can notice that in order for the Markov chain to be coherent, the sum of the coefficients of each row of the matrix must be equal to \(1\). 
 
-An example provided with [ofxMarkovChain][ofxMarkovChain]{:target="_blank"} is a random walker. The walker uses a Markov chain to choose in which direction to go next. The Markov chain has 4 states, each state corresponding to a direction: up, down, left or right. 
+An example provided with <a href="https://github.com/elaye/ofxMarkovChain" target="_blank">ofxMarkovChain</a> is a random walker. The walker uses a Markov chain to choose in which direction to go next. The Markov chain has 4 states, each state corresponding to a direction: up, down, left or right. 
 
 <figure>
   $img("./images/random_walker.png", "Random walker")$
