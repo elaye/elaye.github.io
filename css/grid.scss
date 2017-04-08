@@ -1,12 +1,15 @@
 @import './colors.scss';
 @import './media-queries.scss';
 
+$cell-border-width: 2px;
+$grid-padding: $cell-border-width / 2;
+
 .grid {
     display: flex;
     flex-direction: column;
     flex: auto;
     width: 100%;
-    padding: 4px;
+    padding: $grid-padding;
     box-sizing: border-box;
 }
 
@@ -14,6 +17,7 @@
     display: flex;
     flex: auto;
     flex-direction: column;
+    margin: 0;
 
     @media (min-width: $bp-phablet) {
         flex-direction: row;
@@ -35,7 +39,7 @@
     flex-direction: column;
     overflow: hidden;
     position: relative;
-    border: 8px solid transparent;
+    border: $cell-border-width solid $c-grey-lighter;
     box-sizing: border-box;
     /* 100vw * 9 / 16 */
     height: 56.25vw;
