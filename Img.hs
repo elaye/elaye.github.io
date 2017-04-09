@@ -17,16 +17,9 @@ data ImageSpec = ImageSpec String (Int, Int)
 
 imageSpecs :: [ImageSpec]
 imageSpecs =
-  -- [ ImageSpec "mobile" (640, 360)
   [ ImageSpec "mobile" (320, 180)
-  -- [ ImageSpec "mobile" (160, 90)
   , ImageSpec "tablet" (640, 360)
-  -- , ImageSpec "phablet" (320, 180)
-  -- , ImageSpec "tablet" (1024, 576)
-  -- , ImageSpec "desktop" (1920, 1080)
   , ImageSpec "desktop" (1280, 720)
-  -- , ImageSpec "desktop" (1024, 576)
-  -- , ImageSpec "desktop" (640, 360)
   ]
 
 heroField :: String -> Context String
@@ -53,8 +46,6 @@ imgField name = functionField name $ \args item -> do
         else (args !! 0, args !! 1)
   imgTpl <- loadBody "templates/img.html"
   let imgCtx = srcCtx src <> constField "alt" alt
-    -- imgCtx = constField "src" src <> constField "alt" alt
-    -- srcCtx = constField "src" "test"
   itemBody <$> applyTemplate imgTpl imgCtx item
 
 srcCtx :: FilePath -> Context String
@@ -68,9 +59,6 @@ imageRules :: Pattern -> Rules ()
 imageRules ptn = match ptn $ mapM_ processImage imageSpecs
 
 processImage :: ImageSpec -> Rules ()
--- processImage (name, Nothing) = version name $ do
---   route $ customRoute (imageRoute name)
---   compile copyFileCompiler
 processImage (ImageSpec name (x, y)) = version name $ do
   route $ customRoute (imageRoute name)
   let
@@ -79,7 +67,6 @@ processImage (ImageSpec name (x, y)) = version name $ do
       [ "-"
       , "-resize"
       , concat [show x, "x", show y, "^"]
-      -- , concat [show x, "x", show y]
       , "-gravity"
       , "Center"
       , "-quality"
@@ -91,11 +78,11 @@ processImage (ImageSpec name (x, y)) = version name $ do
       ]
   compile $ getResourceLBS >>= withItemBody (unixFilterLBS cmd (traceShow args args))
 
--- Add suffix to file name and change extension to jpg
+-- Add suffix to file name, change extension to jpg and
+-- remove 'resources' directory from hierarchy if it exists
 toConvertedPath :: String -> FilePath -> FilePath
 toConvertedPath sizeName path = dir </> newName
   where
-    -- dir = takeDirectory path
     dir = joinPath $ filter (/= "resources/") $ splitPath . takeDirectory $ path
     (base, _) = splitExtensions . takeFileName $ path
     newName = base ++ "-" ++ sizeName <.> "jpg"
@@ -105,11 +92,4 @@ toConvertedPath sizeName path = dir </> newName
 -- in the hierarchy and add a suffix
 imageRoute :: String -> Identifier -> FilePath
 imageRoute sizeName ident = toConvertedPath sizeName $ toFilePath ident
-  -- where
-    -- path = toFilePath ident
-    -- Remove 'resources' from the file path, keeping the same folder structure
-    -- dir = joinPath $ filter (/= "resources/") $ splitPath . takeDirectory $ path
-    -- newName = takeFileName . toConvertedPath sizeName $ path
-    -- (base, exts) = splitExtensions . takeFileName $ path
-    -- newName = base ++ "-" ++ sizeName <.> "jpg"
 

@@ -108,24 +108,3 @@ cellCtx (Weight w) =
   constField "weight" (show w) <>
   heroField "hero" <>
   defaultContext
-
--- heroCtx :: Context String
--- heroCtx = functionField "hero" $ \args item -> do
---   let iid = itemIdentifier item
---   metadata <- getMetadata iid
---   path <- fromMaybe "" <$> getRoute iid
---   let
---     missingMetadata name = error $ "Missing " ++ name ++ " for post " ++ show iid
---     metadataVal name = fromMaybe (missingMetadata name) $ lookupString name metadata
---     relHeroUrl = metadataVal "heroUrl"
---     -- To allow relative path for heroUrl
---     heroUrl = (takeDirectory path) </> (normalise relHeroUrl)
---     title = metadataVal "title"
---     cls = if null args then "" else head args
---   -- imgTpl <- loadBody "templates/img.html"
---   -- -- let imgCtx = constField "src" heroUrl <> constField "alt" title <> constField "class" cls
---   -- let imgCtx = imgField "img" <> constField "class" cls
---   -- itemBody <$> applyTemplate imgTpl imgCtx item
---   imgField "img" (Just heroUrl) <> constField "class" cls
-
-
