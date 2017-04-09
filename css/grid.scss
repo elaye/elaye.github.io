@@ -11,13 +11,16 @@ $grid-padding: $cell-border-width / 2;
     width: 100%;
     padding: $grid-padding;
     box-sizing: border-box;
+
+    ul {
+        margin: 0;
+    }
 }
 
 .grid__row {
     display: flex;
     flex: auto;
     flex-direction: column;
-    margin: 0;
 
     @media (min-width: $bp-phablet) {
         flex-direction: row;

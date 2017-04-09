@@ -1,4 +1,11 @@
-<img src="$src$" alt="$alt$" $if(class)$ class="$class$" $endif$
-     srcset=""
-     sizes=""
->
+<picture>
+    <source srcset="$desktopSrc$ $desktopWidth$" media="(min-width: 1024px)" />
+    <source srcset="$tabletSrc$ $tabletWidth$" media="(min-width: 540px)" />
+    <img
+        src="$mobileSrc$"
+        $if(class)$
+            class="$class$"
+        $endif$
+        alt="$alt$"
+    />
+</picture>
