@@ -5,25 +5,28 @@ import Hakyll
 import Hakyll.Web.Sass (sassCompiler)
 
 import Grid (gridField)
-import Img (imgField)
+import Img (imageRules, imgField)
 import Rating (ratingField)
+
 
 main :: IO ()
 main = hakyll $ do
     match "templates/*" $ compile templateBodyCompiler
 
-    match "images/**" $ do
-        route   idRoute
-        compile copyFileCompiler
+    -- match "images/**" $ do
+    --     route   idRoute
+    --     compile copyFileCompiler
+
+    -- match "posts/*/*/images/**" $ do
+    --   route idRoute
+    --   compile copyFileCompiler
+
+    imageRules "posts/**/resources/images/**"
 
     match "css/*.scss" $ do
       route $ setExtension "css"
       let compressCssItem = fmap compressCss
       compile (compressCssItem <$> sassCompiler)
-
-    match "posts/*/*/images/**" $ do
-      route idRoute
-      compile copyFileCompiler
 
     match "posts/code/*/*" $ do
         route $ setExtension "html"
@@ -55,5 +58,5 @@ main = hakyll $ do
 
 postCtx :: Context String
 postCtx =
-    dateField "date" "%B %e, %Y" <>
-    defaultContext
+  dateField "date" "%B %e, %Y" <>
+  defaultContext
