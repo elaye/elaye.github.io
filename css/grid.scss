@@ -15,6 +15,11 @@ $grid-padding: $cell-border-width / 2;
     ul {
         margin: 0;
     }
+
+    img {
+        /* so that images shrink to fit in grid in Chrome */
+        min-width: 0;
+    }
 }
 
 .grid__row {
