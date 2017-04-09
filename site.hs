@@ -22,6 +22,7 @@ main = hakyll $ do
       compile copyFileCompiler
 
     imageRules "posts/**/resources/images/**.png"
+    imageRules "posts/**/resources/images/**.jpg"
 
     match "css/*.scss" $ do
       route $ setExtension "css"
