@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Img
 ( imgField
+, pictureField
 , heroField
 , imageRules
 ) where
@@ -35,8 +36,17 @@ heroField name = functionField name $ \args item -> do
     heroUrl = (takeDirectory path) </> (normalise relHeroUrl)
     title = metadataVal "title"
     cls = if null args then "" else head args
-  imgTpl <- loadBody "templates/img.html"
+  imgTpl <- loadBody "templates/picture.html"
   let imgCtx = srcCtx heroUrl <> constField "class" cls <> constField "alt" title
+  itemBody <$> applyTemplate imgTpl imgCtx item
+
+pictureField :: String -> Context String
+pictureField name = functionField name $ \args item -> do
+  let (src, alt) =
+        if length args /= 2 then error "Missing argument to pictureField"
+        else (args !! 0, args !! 1)
+  imgTpl <- loadBody "templates/picture.html"
+  let imgCtx = srcCtx src <> constField "alt" alt
   itemBody <$> applyTemplate imgTpl imgCtx item
 
 imgField :: String -> Context String
@@ -45,7 +55,7 @@ imgField name = functionField name $ \args item -> do
         if length args /= 2 then error "Missing argument to imgField"
         else (args !! 0, args !! 1)
   imgTpl <- loadBody "templates/img.html"
-  let imgCtx = srcCtx src <> constField "alt" alt
+  let imgCtx = constField "src" src <> constField "alt" alt
   itemBody <$> applyTemplate imgTpl imgCtx item
 
 srcCtx :: FilePath -> Context String

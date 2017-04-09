@@ -5,7 +5,7 @@ import Hakyll
 import Hakyll.Web.Sass (sassCompiler)
 
 import Grid (gridField)
-import Img (imageRules, imgField)
+import Img (imageRules, imgField, pictureField)
 import Rating (ratingField)
 
 
@@ -17,11 +17,11 @@ main = hakyll $ do
     --     route   idRoute
     --     compile copyFileCompiler
 
-    -- match "posts/*/*/images/**" $ do
-    --   route idRoute
-    --   compile copyFileCompiler
+    match "posts/*/*/images/**" $ do
+      route idRoute
+      compile copyFileCompiler
 
-    imageRules "posts/**/resources/images/**"
+    imageRules "posts/**/resources/images/**.png"
 
     match "css/*.scss" $ do
       route $ setExtension "css"
@@ -30,7 +30,7 @@ main = hakyll $ do
 
     match "posts/code/*/*" $ do
         route $ setExtension "html"
-        let ctx = postCtx <> imgField "img"
+        let ctx = postCtx <> imgField "img" <> pictureField "picture"
         compile $ getResourceBody
             >>= applyAsTemplate ctx
             >>= loadAndApplyTemplate "templates/post.html" ctx
