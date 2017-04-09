@@ -81,8 +81,6 @@ processImage (ImageSpec name (x, y)) = version name $ do
       , "Center"
       , "-quality"
       , "50"
-      , "-crop"
-      , concat [show x, "x", show y, "+0+0"]
       , "+repage"
       , "jpeg:-"
       ]
