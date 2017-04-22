@@ -92,17 +92,15 @@ $grid-padding: $cell-border-width / 2;
     }
 }
 
-.grid__cell--title {
+.grid__cell--copy {
     width: 100%;
     padding: 10px 0;
     position: absolute;
     bottom: 0;
     text-align: center;
     font-size: 18px;
-    font-weight: bold;
     line-height: 1.5;
-    background-color: $c-black-translucent;
-    color: $c-bg;
+    background-image: linear-gradient($c-transparent, $c-black-translucent);
 
     @media (min-width: $bp-tablet-width-max) {
         width: 80%;
@@ -116,8 +114,17 @@ $grid-padding: $cell-border-width / 2;
         opacity: 0;
         font-size: 24px;
     }
+
+    h1, h2 {
+        position: relative;
+        color: $c-bg;
+    }
+
+    h1 {
+        font-weight: bold;
+    }
 }
 
-.grid__cell:hover .grid__cell--title {
+.grid__cell:hover .grid__cell--copy {
     opacity: 1;
 }
