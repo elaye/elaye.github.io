@@ -84,7 +84,7 @@ processImage (ImageSpec name (x, y)) = version name $ do
       , "+repage"
       , "jpeg:-"
       ]
-  compile $ getResourceLBS >>= withItemBody (unixFilterLBS cmd (traceShow args args))
+  compile $ getResourceLBS >>= withItemBody (unixFilterLBS cmd args)
 
 -- Add suffix to file name, change extension to jpg and
 -- remove 'resources' directory from hierarchy if it exists
