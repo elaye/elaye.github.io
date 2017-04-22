@@ -5,7 +5,8 @@ import Hakyll
 import Hakyll.Web.Sass (sassCompiler)
 
 import Grid (gridField)
-import Img (imageRules, imgField, pictureField)
+import Link (extLinkField)
+import Img (imageRules, imgField, heroField, pictureField)
 import Rating (ratingField)
 
 
@@ -38,10 +39,29 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" ctx
             >>= relativizeUrls
 
+    match "posts/work/*/*" $ do
+        route $ setExtension "html"
+        let ctx = postCtx <> imgField "img" <> pictureField "picture" <> extLinkField "extLink"
+        compile $ getResourceBody
+            >>= applyAsTemplate ctx
+            >>= loadAndApplyTemplate "templates/post-work.html" ctx
+            >>= loadAndApplyTemplate "templates/default.html" ctx
+            >>= relativizeUrls
+
     match "index.html" $ do
       route idRoute
       compile $ do
         posts <- recentFirst =<< loadAll "posts/code/*/*"
+        let ctx = gridField "grid" posts <> defaultContext
+        getResourceBody
+          >>= applyAsTemplate ctx
+          >>= loadAndApplyTemplate "templates/default.html" ctx
+          >>= relativizeUrls
+
+    match "work.html" $ do
+      route idRoute
+      compile $ do
+        posts <- recentFirst =<< loadAll "posts/work/*/*"
         let ctx = gridField "grid" posts <> defaultContext
         getResourceBody
           >>= applyAsTemplate ctx
