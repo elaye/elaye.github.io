@@ -2,7 +2,7 @@
 {-# LANGUAGE FlexibleContexts #-}
 import Data.Monoid ((<>))
 import Hakyll
-import Hakyll.Web.Sass (sassCompiler)
+import Hakyll.Web.Sass (renderSass)
 import Hakyll.Favicon (faviconsField, faviconsRules)
 
 import Grid (gridField)
@@ -13,12 +13,6 @@ import Rating (ratingField)
 
 main :: IO ()
 main = hakyll $ do
-    match "templates/*" $ compile templateBodyCompiler
-
-    -- match "images/**" $ do
-    --     route   idRoute
-    --     compile copyFileCompiler
-
     match "posts/*/*/images/**" $ do
       route idRoute
       compile copyFileCompiler
@@ -29,9 +23,18 @@ main = hakyll $ do
     faviconsRules "images/favicon.svg"
 
     match "css/*.scss" $ do
-      route $ setExtension "css"
-      let compressCssItem = fmap compressCss
-      compile (compressCssItem <$> sassCompiler)
+      compile getResourceBody
+
+    scssDependencies <- makePatternDependency "css/*.scss"
+    rulesExtraDependencies [scssDependencies] $ do
+      create ["css/main.css"] $ do
+        route idRoute
+        compile $ do
+          mainScss <- load "css/main.scss"
+          let compressCssItem = fmap compressCss
+          compressCssItem <$> renderSass mainScss
+
+    match "templates/*" $ compile templateBodyCompiler
 
     match "posts/code/*/*" $ do
         route $ setExtension "html"

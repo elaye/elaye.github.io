@@ -1,4 +1,42 @@
+@import 'colors.scss';
 @import './media-queries.scss';
+
+nav {
+    text-align: right;
+    width: 100%;
+}
+
+nav a {
+    position: relative;
+    color: $c-fg;
+    font-size: 18px;
+    margin-left: 18px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: border 300ms;
+
+    &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 1px;
+        width: 100%;
+        background-color: $c-black;
+        transform: scaleX(0);
+        transform-origin: 100% 0;
+        transition: transform 300ms;
+    }
+}
+
+@media (min-width: $bp-phablet) {
+    nav a:hover {
+        &::before {
+            transform: scaleX(1);
+            transform-origin: 0 0;
+        }
+    }
+}
 
 .menu {
     text-decoration: none;
