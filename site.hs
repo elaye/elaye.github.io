@@ -3,6 +3,7 @@
 import Data.Monoid ((<>))
 import Hakyll
 import Hakyll.Web.Sass (sassCompiler)
+import Hakyll.Favicon (faviconsField, faviconsRules)
 
 import Grid (gridField)
 import Link (extLinkField)
@@ -24,6 +25,8 @@ main = hakyll $ do
 
     imageRules "posts/**/resources/images/**.png"
     imageRules "posts/**/resources/images/**.jpg"
+
+    faviconsRules "images/favicon.svg"
 
     match "css/*.scss" $ do
       route $ setExtension "css"
@@ -52,7 +55,7 @@ main = hakyll $ do
       route idRoute
       compile $ do
         posts <- recentFirst =<< loadAll "posts/code/*/*"
-        let ctx = gridField "grid" posts <> defaultContext
+        let ctx = gridField "grid" posts <> defaultCtx
         getResourceBody
           >>= applyAsTemplate ctx
           >>= loadAndApplyTemplate "templates/default.html" ctx
@@ -62,7 +65,7 @@ main = hakyll $ do
       route idRoute
       compile $ do
         posts <- recentFirst =<< loadAll "posts/work/*/*"
-        let ctx = gridField "grid" posts <> defaultContext
+        let ctx = gridField "grid" posts <> defaultCtx
         getResourceBody
           >>= applyAsTemplate ctx
           >>= loadAndApplyTemplate "templates/default.html" ctx
@@ -71,7 +74,7 @@ main = hakyll $ do
     match "about.html" $ do
         route   $ setExtension "html"
         compile $ do
-          let ctx = ratingField "rating" <> defaultContext
+          let ctx = ratingField "rating" <> defaultCtx
           getResourceBody
             >>= applyAsTemplate ctx
             >>= loadAndApplyTemplate "templates/default.html" ctx
@@ -80,4 +83,7 @@ main = hakyll $ do
 postCtx :: Context String
 postCtx =
   dateField "date" "%B %e, %Y" <>
-  defaultContext
+  defaultCtx
+
+defaultCtx :: Context String
+defaultCtx = faviconsField <> defaultContext
