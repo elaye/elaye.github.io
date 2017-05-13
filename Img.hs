@@ -60,7 +60,7 @@ pictureField name = functionField name $ \args item -> do
     picCtx = case picCls of
       Just c -> constField "picClass" c
       Nothing -> mempty
-    ctx = imgCtx <> picCtx <> srcCtx src <> constField "alt" alt
+    ctx = imgCtx <> picCtx <> srcCtx src <> constField "alt" alt <> defaultContext
   itemBody <$> applyTemplate imgTpl ctx item
 
 imgField :: String -> Context String

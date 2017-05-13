@@ -1,7 +1,11 @@
-$picture("./images/hero.jpg", "hero", "", "hero")$
+<div class="post-work__header">
+    $picture("./images/hero.jpg", "hero", "hero", "")$
+    <div class="post-work-header__copy">
+        $if(title)$<h1>$title$</h1>$endif$
+    </div>
+</div>
 <article>
     <div class="info">
-        $if(title)$<h1>$title$</h1>$endif$
         Posted on $date$
         $if(notes)$
             <br>

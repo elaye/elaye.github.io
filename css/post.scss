@@ -1,5 +1,34 @@
+@import 'colors.scss';
+
 .hero {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center bottom;
+}
+
+.post-work__header {
+    position: relative;
     width: 100%;
     height: calc(100vw * 1 / 4);
     overflow: hidden;
+}
+
+.post-work-header__copy {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $c-black-translucent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+        vertical-align: middle;
+        color: $c-white;
+        text-align: center;
+        font-size: 32px;
+    }
 }
