@@ -22,6 +22,10 @@ main = hakyll $ do
 
     faviconsRules "images/favicon.svg"
 
+    match "images/**" $ do
+      route idRoute
+      compile copyFileCompiler
+
     match "css/*.scss" $ do
       compile getResourceBody
 
