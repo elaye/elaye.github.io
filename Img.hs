@@ -37,17 +37,31 @@ heroField name = functionField name $ \args item -> do
     title = metadataVal "title"
     cls = if null args then "" else head args
   imgTpl <- loadBody "templates/picture.html"
-  let imgCtx = srcCtx heroUrl <> constField "class" cls <> constField "alt" title
+  let imgCtx = srcCtx heroUrl <> constField "imgClass" cls <> constField "alt" title
   itemBody <$> applyTemplate imgTpl imgCtx item
+
+parsePictureFieldArguments :: [String] -> (String, String, Maybe String, Maybe String)
+parsePictureFieldArguments args = if length args < 2 then error "Missing argument to pictureField"
+  else (src, alt, imgCls, picCls)
+    where
+      src = args !! 0
+      alt = args !! 1
+      imgCls = if length args > 2 then Just (args !! 2) else Nothing
+      picCls = if length args > 3 then Just (args !! 3) else Nothing
 
 pictureField :: String -> Context String
 pictureField name = functionField name $ \args item -> do
-  let (src, alt) =
-        if length args /= 2 then error "Missing argument to pictureField"
-        else (args !! 0, args !! 1)
+  let (src, alt, imgCls, picCls) = traceShow args $ parsePictureFieldArguments args
   imgTpl <- loadBody "templates/picture.html"
-  let imgCtx = srcCtx src <> constField "alt" alt
-  itemBody <$> applyTemplate imgTpl imgCtx item
+  let
+    imgCtx = case imgCls of
+      Just c -> constField "imgClass" c
+      Nothing -> mempty
+    picCtx = case picCls of
+      Just c -> constField "picClass" c
+      Nothing -> mempty
+    ctx = imgCtx <> picCtx <> srcCtx src <> constField "alt" alt
+  itemBody <$> applyTemplate imgTpl ctx item
 
 imgField :: String -> Context String
 imgField name = functionField name $ \args item -> do
