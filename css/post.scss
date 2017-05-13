@@ -12,6 +12,8 @@
     width: 100%;
     height: calc(100vw * 1 / 4);
     overflow: hidden;
+    box-shadow: 0 5px 10px $c-black-translucent;
+    margin-bottom: $spacing-unit;
 }
 
 .post-work-header__copy {
@@ -22,14 +24,18 @@
     height: 100%;
     background-color: $c-black-translucent;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 
     h1 {
-        vertical-align: middle;
         color: $c-white;
-        text-align: center;
         font-size: 32px;
+    }
+
+    h2 {
+        color: $c-white;
+        font-size: 24px;
     }
 }
 
