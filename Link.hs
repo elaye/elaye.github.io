@@ -10,4 +10,7 @@ extLinkField name = functionField name $ \args _ -> if length args < 2
   else return $ mkLinkHtml (args !! 0) (args !! 1)
 
 mkLinkHtml :: String -> String -> String
-mkLinkHtml txt link = "<a href=\"" ++ link ++ "\" target=\"_blank\">" ++ txt ++ " &#10230;</a>"
+mkLinkHtml txt link = txtLink ++ " " ++ arrowLink
+  where
+    txtLink = "<a href=\"" ++ link ++ "\" target=\"_blank\">" ++ txt ++ "</a>"
+    arrowLink = "<a href=\"" ++ link ++ "\" target=\"_blank\" style=\"text-decoration: none;\">&#10230;</a>"
