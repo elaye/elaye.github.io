@@ -32,3 +32,32 @@
         font-size: 32px;
     }
 }
+
+.post-work__info {
+    display: flex;
+    flex-direction: row;
+
+    section {
+        flex-grow: 1;
+    }
+
+    li::before {
+        content: '';
+    }
+
+    li {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        text-indent: 20px;
+        padding: 0;
+    }
+
+    li img {
+        height: 40px;
+        width: 60px;
+        object-fit: contain;
+        object-position: right center;
+    }
+}
