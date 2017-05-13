@@ -26,6 +26,10 @@ main = hakyll $ do
       route idRoute
       compile copyFileCompiler
 
+    match "posts/code/*/snippets/**" $ do
+      route idRoute
+      compile pandocCompiler
+
     match "css/*.scss" $ do
       compile getResourceBody
 
@@ -40,9 +44,9 @@ main = hakyll $ do
 
     match "templates/*" $ compile templateBodyCompiler
 
-    match "posts/code/*/*" $ do
+    match "posts/code/*/*.html" $ do
         route $ setExtension "html"
-        let ctx = postCtx <> imgField "img" <> pictureField "picture"
+        let ctx = postCtx <> imgField "img" <> pictureField "picture" <> snippetField
         compile $ getResourceBody
             >>= applyAsTemplate ctx
             >>= loadAndApplyTemplate "templates/post.html" ctx
