@@ -1,6 +1,11 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Grid
 ( gridField
+, row211
+, row112
+, row11
+, row111
+, Grid(..)
 ) where
 
 import Data.Monoid ((<>))
@@ -16,11 +21,12 @@ data Grid a = Cell a | Row [Grid a] deriving (Show)
 
 data Weight = Weight Int deriving (Show)
 
-gridField :: String -> [Item String] -> Context String
-gridField name items = field name $ \_ -> do
+gridField :: String -> [Item String] -> Grid Weight -> Context String
+gridField name items layout = field name $ \_ -> do
   liTpl <- loadBody "templates/grid-cell.html"
   ulTpl <- loadBody "templates/grid-group.html"
-  let grid = snd $ fillGrid defLayout items
+  -- let grid = snd $ fillGrid defLayout items
+  let grid = snd $ fillGrid layout items
   itemBody <$> mkGridHtml Vert grid liTpl ulTpl
 
 row211 :: Grid Weight
@@ -32,13 +38,18 @@ row112 = Row [Row [Cell (Weight 1), Cell (Weight 1)], Cell (Weight 2)]
 row11 :: Grid Weight
 row11 = Row [Cell (Weight 1), Cell (Weight 1)]
 
+row111 :: Grid Weight
+row111 = Row [Cell (Weight 1), Cell (Weight 1), Cell (Weight 1)]
+
+
 -- No more than 3 tiles per row, otherwise it looks weird on tablet
 defLayout :: Grid Weight
 defLayout = Row
   [ row211
   -- , Row [Cell (Weight 1)]
+  , row11
   , row112
-  -- , row11
+  , row11
   , row211
   ]
 

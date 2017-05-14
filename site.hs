@@ -5,7 +5,7 @@ import Hakyll
 import Hakyll.Web.Sass (renderSass)
 import Hakyll.Favicon (faviconsField, faviconsRules)
 
-import Grid (gridField)
+import Grid (gridField, row211, row112, row11, row111, Grid(..))
 import Link (extLinkField)
 import Img (imageRules, imgField, heroField, pictureField)
 import Rating (ratingField)
@@ -44,7 +44,7 @@ main = hakyll $ do
 
     match "templates/*" $ compile templateBodyCompiler
 
-    match "posts/code/*/*.html" $ do
+    match "posts/code/*/index.html" $ do
         route $ setExtension "html"
         let ctx = postCtx <> imgField "img" <> pictureField "picture" <> snippetField
         compile $ getResourceBody
@@ -53,7 +53,7 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" ctx
             >>= relativizeUrls
 
-    match "posts/work/*/*" $ do
+    match "posts/work/*/index.html" $ do
         route $ setExtension "html"
         let ctx = postCtx <> imgField "img" <> pictureField "picture" <> extLinkField "extLink"
         compile $ getResourceBody
@@ -62,21 +62,35 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" ctx
             >>= relativizeUrls
 
+
+    -- TODO: make grid layout dynamic
+    let codeGridLayout = Row
+          -- [ row211
+          [ row111
+          , row11
+          , row112
+          , row11
+          ]
     match "index.html" $ do
       route idRoute
       compile $ do
-        posts <- recentFirst =<< loadAll "posts/code/*/*"
-        let ctx = gridField "grid" posts <> defaultCtx
+        posts <- recentFirst =<< loadAll "posts/code/*/index.html"
+        let ctx = gridField "grid" posts codeGridLayout <> defaultCtx
         getResourceBody
           >>= applyAsTemplate ctx
           >>= loadAndApplyTemplate "templates/default.html" ctx
           >>= relativizeUrls
 
+    -- TODO: make grid layout dynamic
+    let workGridLayout = Row
+          [ row211
+          , row112
+          ]
     match "work.html" $ do
       route idRoute
       compile $ do
         posts <- recentFirst =<< loadAll "posts/work/*/*"
-        let ctx = gridField "grid" posts <> defaultCtx
+        let ctx = gridField "grid" posts workGridLayout <> defaultCtx
         getResourceBody
           >>= applyAsTemplate ctx
           >>= loadAndApplyTemplate "templates/default.html" ctx
