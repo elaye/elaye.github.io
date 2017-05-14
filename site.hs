@@ -5,11 +5,13 @@ import Hakyll
 import Hakyll.Web.Sass (renderSass)
 import Hakyll.Favicon (faviconsField, faviconsRules)
 
+import Metadata (metadataListField)
 import Grid (gridField, row211, row112, row11, row111, Grid(..))
 import Link (extLinkField)
-import Img (imageRules, imgField, heroField, pictureField)
+import Img (imageRules, imgField, pictureField)
 import Rating (ratingField)
 
+import Debug.Trace (traceShow)
 
 main :: IO ()
 main = hakyll $ do
@@ -62,6 +64,22 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" ctx
             >>= relativizeUrls
 
+    -- Standalone pages
+    match "posts/code/*/*.html" $ do
+        route $ setExtension "html"
+        let ctx = postCtx
+                  <> imgField "img"
+                  <> pictureField "picture"
+                  <> snippetField
+                  <> metadataListField
+        compile $ getResourceBody
+            >>= applyAsTemplate ctx
+            >>= loadAndApplyTemplate "templates/default.html" ctx
+            >>= relativizeUrls
+
+    match "posts/*/*/js/**" $ do
+      route idRoute
+      compile copyFileCompiler
 
     -- TODO: make grid layout dynamic
     let codeGridLayout = Row
