@@ -83,9 +83,9 @@ main = hakyll $ do
 
     -- TODO: make grid layout dynamic
     let codeGridLayout = Row
-          -- [ row211
-          [ row111
-          , row11
+          [ row211
+          , row111
+          -- , row11
           , row112
           , row11
           ]

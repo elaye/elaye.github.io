@@ -1,0 +1,68 @@
+---
+title:  "Exploding sphere"
+date:   2015-05-27 16:55:00
+heroUrl: "./images/hero.png"
+notes: 'Check out the <a href="./demo_sphere.html">demo <i class="fa fa-cube"></i></a> with parameters'
+js:
+ - ./js/three.min.js
+ - ./js/dat.gui.min.js
+ - ./js/util.js
+ - ./js/geometry.js
+ - ./js/shaders.js
+ - ./js/material.js
+ - ./js/sphere.js
+ - ./js/sphere1.js
+---
+
+<style>
+#gui {
+    position: absolute;
+    left: 0;
+    margin: 30px;
+    color: white;
+}
+ #gui span, #gui li {
+    color: white;
+}
+#sphere {
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<div id="sphere"></div>
+<div id="gui"></div>
+
+<script type="text/javascript">
+	(function(){
+
+		window.onload = function() {
+			var sphere = ExplodingSphere(document.getElementById('sphere'), 0, 0, 0);
+			var gui = new dat.GUI({ autoPlace: false });
+			var guiContainer = document.getElementById('gui');
+      console.log(guiContainer);
+			guiContainer.appendChild(gui.domElement);
+
+			var opt = sphere.material; 
+
+			var displacement = gui.addFolder('Displacement');
+			displacement.add(opt, 'normalAmp', 0, 1000);
+			displacement.add(opt, 'normalDev', 0.2, 0.4);
+			displacement.add(opt, 'lateralAmp', 0, 1);
+			displacement.add(opt, 'lateralDev', 0, 20);
+
+			var noise = gui.addFolder('Noise');
+			noise.add(opt, 'noisePositionScale', 0.1, 3.0);
+			noise.add(opt, 'noiseTimeScale', 0.1, 10.0);
+			noise.add(opt, 'noiseAmp', 0.01, 1.0);
+
+			var explosion = gui.addFolder('Explosion');
+			explosion.add(opt, 'rewindSpeed', 0.5, 5.0);
+
+			var lights = gui.addFolder('Lights');
+			lights.addColor(opt, 'ambientColor');
+			lights.addColor(opt, 'diffuseColor1');
+			lights.addColor(opt, 'diffuseColor2');
+		};
+	})();
+</script>
