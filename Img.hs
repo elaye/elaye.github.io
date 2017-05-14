@@ -51,7 +51,7 @@ parsePictureFieldArguments args = if length args < 2 then error "Missing argumen
 
 pictureField :: String -> Context String
 pictureField name = functionField name $ \args item -> do
-  let (src, alt, imgCls, picCls) = traceShow args $ parsePictureFieldArguments args
+  let (src, alt, imgCls, picCls) = parsePictureFieldArguments args
   imgTpl <- loadBody "templates/picture.html"
   let
     imgCtx = case imgCls of
