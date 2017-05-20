@@ -52,6 +52,13 @@ nav a {
     font-size: 22px;
 }
 
+
+@media (max-width: $bp-tablet-width) {
+    #nav nav a {
+        padding: 10px;
+    }
+}
+
 @media (max-width: $bp-phablet) {
     #nav nav a, nav a.menu {
         display: none;
@@ -103,7 +110,7 @@ nav a {
     }
     #nav:target .menu {
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 5px;
+        right: 5px;
     }
 }
