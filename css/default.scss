@@ -58,16 +58,27 @@ footer {
 }
 
 h1 {
-    font-size: 24px;
+    /* font-size: 24px; */
+    font-size: 32px;
+    font-weight: bold;
 }
 
 h2 {
+    /* font-size: 20px; */
+    font-size: 24px;
+    font-weight: bold;
+}
+
+h3 {
     font-size: 20px;
+    font-weight: bold;
 }
 
 p {
     line-height: 1.5;
-    margin-top: 1.8em;
+    /* margin-top: 1.8em; */
+    font-size: 18px;
+    margin-bottom: 30px;
 }
 
 strong {
@@ -84,8 +95,14 @@ img {
 
 div.info {
     color: #555;
-    font-size: 14px;
-    font-style: italic;
+    font-size: 16px;
+    margin-bottom: 50px;
+}
+
+p.notes {
+    color: #555;
+    font-size: 16px;
+    margin-top: 15px;
 }
 
 main {
