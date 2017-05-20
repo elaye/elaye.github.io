@@ -11,17 +11,17 @@ js:
  - ./js/shaders.js
  - ./js/material.js
  - ./js/sphere.js
- - ./js/sphere1.js
 ---
 
 <style>
 #gui {
     position: absolute;
     left: 0;
+    top: 72px;
     margin: 30px;
     color: white;
 }
- #gui span, #gui li {
+#gui span, #gui li {
     color: white;
 }
 #sphere {
@@ -37,32 +37,33 @@ js:
 	(function(){
 
 		window.onload = function() {
-			var sphere = ExplodingSphere(document.getElementById('sphere'), 0, 0, 0);
-			var gui = new dat.GUI({ autoPlace: false });
-			var guiContainer = document.getElementById('gui');
-      console.log(guiContainer);
-			guiContainer.appendChild(gui.domElement);
+        var sphere = ExplodingSphere(document.getElementById('sphere'), 0, 0, 0);
+        var gui = new dat.GUI({ autoPlace: false });
+        var guiContainer = document.getElementById('gui');
+        console.log(guiContainer);
+        guiContainer.appendChild(gui.domElement);
 
-			var opt = sphere.material; 
+        var opt = sphere.material;
 
-			var displacement = gui.addFolder('Displacement');
-			displacement.add(opt, 'normalAmp', 0, 1000);
-			displacement.add(opt, 'normalDev', 0.2, 0.4);
-			displacement.add(opt, 'lateralAmp', 0, 1);
-			displacement.add(opt, 'lateralDev', 0, 20);
+        var options = gui.addFolder('Options');
+        var displacement = options.addFolder('Displacement');
+        displacement.add(opt, 'normalAmp', 0, 1000);
+        displacement.add(opt, 'normalDev', 0.2, 0.4);
+        displacement.add(opt, 'lateralAmp', 0, 1);
+        displacement.add(opt, 'lateralDev', 0, 20);
 
-			var noise = gui.addFolder('Noise');
-			noise.add(opt, 'noisePositionScale', 0.1, 3.0);
-			noise.add(opt, 'noiseTimeScale', 0.1, 10.0);
-			noise.add(opt, 'noiseAmp', 0.01, 1.0);
+        var noise = options.addFolder('Noise');
+        noise.add(opt, 'noisePositionScale', 0.1, 3.0);
+        noise.add(opt, 'noiseTimeScale', 0.1, 10.0);
+        noise.add(opt, 'noiseAmp', 0.01, 1.0);
 
-			var explosion = gui.addFolder('Explosion');
-			explosion.add(opt, 'rewindSpeed', 0.5, 5.0);
+        var explosion = options.addFolder('Explosion');
+        explosion.add(opt, 'rewindSpeed', 0.5, 5.0);
 
-			var lights = gui.addFolder('Lights');
-			lights.addColor(opt, 'ambientColor');
-			lights.addColor(opt, 'diffuseColor1');
-			lights.addColor(opt, 'diffuseColor2');
+        var lights = options.addFolder('Lights');
+        lights.addColor(opt, 'ambientColor');
+        lights.addColor(opt, 'diffuseColor1');
+        lights.addColor(opt, 'diffuseColor2');
 		};
 	})();
 </script>
