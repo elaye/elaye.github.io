@@ -1,5 +1,6 @@
 @import './vars.scss';
 @import './colors.scss';
+@import './media-queries.scss';
 
 * {
     color: $c-fg;
@@ -185,11 +186,15 @@ tr th {
 
 .rating {
     font-family: monospace;
-    font-size: 22px;
 }
 
 .rating span {
     margin: 0 5px;
+    visibility: hidden;
+
+    @media (min-width: $bp-tablet-width-max) {
+        visibility: visible;
+    }
 }
 
 hr.filet {
