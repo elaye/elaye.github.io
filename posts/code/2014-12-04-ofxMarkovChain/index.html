@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Elie Genard">
+        <meta name="description" content="Personal website of Elie Genard, presenting projects and work.">
+
+        <title>Elie Genard - Personal Website</title>
+        <link rel="stylesheet" type="text/css" href="../../../css/main.css" />
+        
+            <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML">
+            </script>
+        
+
+        
+
+        <!-- Make the page mobile compatible -->
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"><link rel="shortcut icon" href="../../../images/favicons/favicon32.png"><link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../images/favicons/favicon144.png"><link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../../images/favicons/favicon114.png"><link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../../images/favicons/favicon72.png"><link rel="apple-touch-icon-precomposed" sizes="57x57" href="../../../images/favicons/favicon57.png">
+
+        <!-- Facebook Open Graph Data -->
+        <meta property="og:image" content="/images/og.png">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="1200">
+        <meta property="og:description" content="Personal website of Elie Genard">
+        <meta property="og:title" content="elaye.github.io">
+
+        <!-- Twitter -->
+        <meta name="twitter:title" content="elaye.github.io">
+
+    </head>
+    <body id="nav">
+        <header>
+            <div id="logo">
+                <a href="../../../">
+                    <svg version="1.1" baseProfile="full" width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="20" cy="20" r="16" fill="transparent" stroke="black" stroke-width="4"></circle>
+                    </svg>
+                </a>
+            </div>
+            <nav>
+                <a href="../../../">Projects</a>
+                <a href="../../../work.html">Work</a>
+                <a href="../../../about.html">About</a>
+                <a href="#nav" class="menu menu-open">MENU</a>
+                <a href="#" class="menu">X</a>
+            </nav>
+        </header>
+
+        <main role="main">
+            <article>
+    <div class="info">
+        <h1>ofxMarkovChain</h1>
+        Posted on December  4, 2014
+        <br>
+        <p class="notes">
+            Addon available on Github: <a href="https://github.com/elaye/ofxMarkovChain" target="_blank">ofxMarkovChain</em> <i class="fa fa-github"></i></a>
+        
+        </p>
+    </div>
+    <p><a href="https://en.wikipedia.org/wiki/Markov_chain" target="_blank">ofxMarkovChain</a> is an addon for openFrameworks that allows you to use Markov chains in a simple way.</p>
+
+<p>A <a href="https://github.com/elaye/ofxMarkovChain" target="_blank">Markov chain</a> is a mathematical system that includes a certain number of states.
+The transition from one state to another is determined by a probability.
+An interesting property of Markov chains is that the next transition only depends on the current state, thus making them memoryless.
+Here is a state diagram of a simple Markov chain with 2 states:</p>
+
+<figure>
+    <div style="width: 60%">
+  <img src="./images/markov_chain.png" alt="Markov chain" />
+
+    </div>
+</figure>
+<br>
+
+<p>If the system is in the state \(A\), then the probability to stay in that state is \(0.3\) and the probability to be in state \(B\) is \(0.7\).
+Now, this system can be represented as a matrix:</p>
+
+\[
+	P = \begin{bmatrix}
+0.3 & 0.7 \\
+0.9 & 0.1
+\end{bmatrix}
+\]
+
+<p>You can notice that in order for the Markov chain to be consistent, the sum of the coefficients of each row of the matrix must be equal to \(1\).</p> 
+
+<p>An example provided with <a href="https://github.com/elaye/ofxMarkovChain" target="_blank">ofxMarkovChain</a> is a random walker.
+The walker uses a Markov chain to choose in which direction to go next.
+The Markov chain has 4 states, each state corresponding to a direction: up, down, left or right.</p>
+
+<figure>
+  <img src="./images/random_walker.png" alt="Random walker" />
+
+</figure>
+
+
+
+
+</article>
+
+        </main>
+        <footer>
+            <a href="//github.com/elaye" target="_blank"><img src="../../../images/networks/github.svg" alt="Github logo" /></a>
+            <a href="//twitter.com/ElieGenard" target="_blank"><img src="../../../images/networks/twitter.svg" alt="Twitter logo" /></a>
+        </footer>
+    </body>
+</html>

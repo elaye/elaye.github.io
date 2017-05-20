@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Elie Genard">
+        <meta name="description" content="Personal website of Elie Genard, presenting projects and work.">
+
+        <title>Elie Genard - Personal Website</title>
+        <link rel="stylesheet" type="text/css" href="../../../css/main.css" />
+        
+            <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML">
+            </script>
+        
+
+        
+
+        <!-- Make the page mobile compatible -->
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"><link rel="shortcut icon" href="../../../images/favicons/favicon32.png"><link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../images/favicons/favicon144.png"><link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../../images/favicons/favicon114.png"><link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../../images/favicons/favicon72.png"><link rel="apple-touch-icon-precomposed" sizes="57x57" href="../../../images/favicons/favicon57.png">
+
+        <!-- Facebook Open Graph Data -->
+        <meta property="og:image" content="/images/og.png">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="1200">
+        <meta property="og:description" content="Personal website of Elie Genard">
+        <meta property="og:title" content="elaye.github.io">
+
+        <!-- Twitter -->
+        <meta name="twitter:title" content="elaye.github.io">
+
+    </head>
+    <body id="nav">
+        <header>
+            <div id="logo">
+                <a href="../../../">
+                    <svg version="1.1" baseProfile="full" width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="20" cy="20" r="16" fill="transparent" stroke="black" stroke-width="4"></circle>
+                    </svg>
+                </a>
+            </div>
+            <nav>
+                <a href="../../../">Projects</a>
+                <a href="../../../work.html">Work</a>
+                <a href="../../../about.html">About</a>
+                <a href="#nav" class="menu menu-open">MENU</a>
+                <a href="#" class="menu">X</a>
+            </nav>
+        </header>
+
+        <main role="main">
+            <article>
+    <div class="info">
+        <h1>Spirograph</h1>
+        Posted on March 12, 2015
+        <br>
+        <p class="notes">
+            <!-- Check out the <a href="/demo_spirograph/index.html">live demo <i class="fa fa-cube"></i></a><br>-->Code available on GitHub: <a href="https://github.com/elaye/spirograph" target="_blank">Spirograph <i class="fa fa-github"></i></a>
+        
+        </p>
+    </div>
+    <p>Have you ever played with a <a href="https://en.wikipedia.org/wiki/Spirograph" target="_blank">spirograph</a>? For those who don't know, it's a geometric drawing toy.
+In it's basic form, it comprises a ring and a wheel with little holes in it.
+To draw with it, you place the wheel inside the ring, you place a pen into one of the holes of the wheel and you move it around the inside of the ring.
+Here is a schema:</p>
+
+<figure>
+    <div style="width: 60%">
+        <img src="./images/spirograph.png" alt="Spirograph diagram" />
+
+    </div>
+</figure>
+
+<p>All the geometric figures produced by a spirograph can be described by the following parametric curve:</p>
+
+\[
+x(t) = (R-r)\cos t + \rho \cos \frac{R-r}{r}t\\
+y(t) = (R-r)\sin t - \rho \sin \frac{R-r}{r}t
+\]
+
+<p>I made a program with openFrameworks that can draw such curves, it is available on <a href="https://github.com/elaye/spirograph" target="_blank">GitHub</a>.</p>
+
+<p>The amazing thing with this is that a very few number of parameters (3) can produce a huge variety of figures. Here are some of them:</p>
+
+<div class="grid" style="margin: 30px 0;">
+    <div class="grid__row" style="align-items: flex-start;">
+			<img src="./images/normal/spirograph_1.png" alt="Spirograph 1" />
+
+			<img src="./images/normal/spirograph_2.png" alt="Spirograph 2" />
+
+			<img src="./images/normal/spirograph_3.png" alt="Spirograph 3" />
+
+			<img src="./images/normal/spirograph_4.png" alt="Spirograph 4" />
+
+    </div>
+
+    <div class="grid__row" style="align-items: flex-start;">
+			<img src="./images/normal/spirograph_5.png" alt="Spirograph 5" />
+
+			<img src="./images/normal/spirograph_6.png" alt="Spirograph 6" />
+
+			<img src="./images/normal/spirograph_7.png" alt="Spirograph 7" />
+
+			<img src="./images/normal/spirograph_8.png" alt="Spirograph 8" />
+
+    </div>
+
+    <div class="grid__row" style="align-items: flex-start;">
+			<img src="./images/normal/spirograph_9.png" alt="Spirograph 9" />
+
+			<img src="./images/normal/spirograph_10.png" alt="Spirograph 10" />
+
+			<img src="./images/normal/spirograph_11.png" alt="Spirograph 11" />
+
+			<img src="./images/normal/spirograph_12.png" alt="Spirograph 12" />
+
+    </div>
+</div>
+
+<p>After reading <a href="http://www.oftenpaper.net/permanent-cyclotron4000.htm" target="_blank">this</a>, I added a spirality parameter.
+Here are some of the figures I produced using this parameter:</p>
+
+<div class="grid" style="margin: 30px 0;">
+    <div class="grid__row" style="align-items: flex-start;">
+			<img src="./images/spiral/spirograph_1.png" alt="Spirograph 1" />
+
+			<img src="./images/spiral/spirograph_2.png" alt="Spirograph 2" />
+
+			<img src="./images/spiral/spirograph_3.png" alt="Spirograph 3" />
+
+			<img src="./images/spiral/spirograph_4.png" alt="Spirograph 4" />
+
+    </div>
+
+    <div class="grid__row" style="align-items: flex-start;">
+			<img src="./images/spiral/spirograph_5.png" alt="Spirograph 5" />
+
+			<img src="./images/spiral/spirograph_6.png" alt="Spirograph 6" />
+
+			<img src="./images/spiral/spirograph_7.png" alt="Spirograph 7" />
+
+			<img src="./images/spiral/spirograph_8.png" alt="Spirograph 8" />
+
+    </div>
+
+    <div class="grid__row" style="align-items: flex-start;">
+			<img src="./images/spiral/spirograph_9.png" alt="Spirograph 9" />
+
+			<img src="./images/spiral/spirograph_10.png" alt="Spirograph 10" />
+
+			<img src="./images/spiral/spirograph_11.png" alt="Spirograph 11" />
+
+			<img src="./images/spiral/spirograph_12.png" alt="Spirograph 12" />
+
+    </div>
+
+    <div class="grid__row" style="align-items: flex-start;">
+			<img src="./images/spiral/spirograph_13.png" alt="Spirograph 13" />
+
+			<img src="./images/spiral/spirograph_14.png" alt="Spirograph 14" />
+
+			<img src="./images/spiral/spirograph_15.png" alt="Spirograph 15" />
+
+			<img src="./images/spiral/spirograph_16.png" alt="Spirograph 16" />
+
+    </div>
+
+    <div class="grid__row" style="align-items: flex-start;">
+			<img src="./images/spiral/spirograph_17.png" alt="Spirograph 17" />
+
+			<img src="./images/spiral/spirograph_18.png" alt="Spirograph 18" />
+
+			<img src="./images/spiral/spirograph_19.png" alt="Spirograph 19" />
+
+			<img src="./images/spiral/spirograph_20.png" alt="Spirograph 20" />
+
+    </div>
+</div>
+
+
+</article>
+
+        </main>
+        <footer>
+            <a href="//github.com/elaye" target="_blank"><img src="../../../images/networks/github.svg" alt="Github logo" /></a>
+            <a href="//twitter.com/ElieGenard" target="_blank"><img src="../../../images/networks/twitter.svg" alt="Twitter logo" /></a>
+        </footer>
+    </body>
+</html>
