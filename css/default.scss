@@ -14,6 +14,8 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /* Set `margin-bottom` to maintain vertical rhythm */
@@ -51,6 +53,7 @@ footer {
     justify-content: center;
     align-items: center;
     width: 100%;
+    flex: 1 0 auto;
 
     img {
         margin: 0 12px;

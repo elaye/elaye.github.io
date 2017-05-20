@@ -23,7 +23,7 @@ $grid-padding: $cell-border-width / 2;
 
 .grid__row {
     display: flex;
-    flex: auto;
+    flex: 1 0 auto;
     flex-direction: column;
 
     @media (min-width: $bp-phablet) {
@@ -32,17 +32,19 @@ $grid-padding: $cell-border-width / 2;
     /* override inline height on mobile */
     @media (max-width: $bp-phablet) {
         height: auto !important;
+        min-height: auto !important;
     }
 }
 
 .grid__col {
     display: flex;
-    flex: auto;
+    flex: 1 0 auto;
     flex-direction: column;
 }
 
 .grid__cell {
     display: flex;
+    flex: 1 0 auto;
     flex-direction: column;
     overflow: hidden;
     position: relative;
@@ -50,9 +52,11 @@ $grid-padding: $cell-border-width / 2;
     box-sizing: border-box;
     /* 100vw * 9 / 16 */
     height: 56.25vw;
+    min-height: 56.25vw;
 
     @media (min-width: $bp-phablet) {
         height: auto;
+        min-height: auto;
     }
 }
 
@@ -121,6 +125,7 @@ $grid-padding: $cell-border-width / 2;
     h1, h2 {
         position: relative;
         color: $c-bg;
+        flex: 1 0 auto;
     }
 
     h2 {
