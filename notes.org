@@ -1,0 +1,12 @@
+* TODO
+** add missing posts (hakyll website, mushu)
+** style post header
+** improve publishing workflow (e.g. only one commit on master with static site, rewrite every time?)
+
+
+* Nice to have
+** Compile LaTeX formulas
+** CSS lightbox (see MDN)
+** Make thumbnail field (for spirograph for example)
+** Make grid layout dynamic
+** Consistent font sizes
