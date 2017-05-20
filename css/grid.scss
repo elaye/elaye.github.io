@@ -124,6 +124,8 @@ $grid-padding: $cell-border-width / 2;
     }
 
     h2 {
+        font-size: 18px;
+
         @media (min-width: $bp-phablet) {
             display: none;
         }
@@ -135,6 +137,7 @@ $grid-padding: $cell-border-width / 2;
 
     h1 {
         font-weight: bold;
+        font-size: 20px;
 
         @media (min-width: $bp-phablet) {
             font-size: 18px;
